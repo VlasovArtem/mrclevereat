@@ -1,25 +1,27 @@
 package org.avlasov.mrclevereat.entity.recipe;
 
 import org.avlasov.mrclevereat.entity.Base;
-import org.avlasov.mrclevereat.entity.product.Product;
+import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.recipe.enums.RecipeVisibility;
+import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
+import org.avlasov.mrclevereat.nutrition.NutritionalValue;
 
 import java.util.List;
 
 /**
  * Created By artemvlasov on 22/12/2017
  **/
-public class Recipe extends Base {
+public class Recipe extends Base implements NutritionalFacts {
 
     private String name;
     private String description;
     private boolean isShared;
-    private List<Product> products;
-    private double totalProteins;
-    private double totalFats;
-    private double totalCarbohydrates;
+    private List<MealProduct> mealProducts;
     private RecipeVisibility recipeVisibility;
     private List<Byte[]> images;
+    private NutritionalValue nutritionalValue;
+    private double volume;
+
 
     public String getName() {
         return name;
@@ -45,36 +47,12 @@ public class Recipe extends Base {
         isShared = shared;
     }
 
-    public List<Product> getProducts() {
-        return products;
+    public List<MealProduct> getMealProducts() {
+        return mealProducts;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
-    }
-
-    public double getTotalProteins() {
-        return totalProteins;
-    }
-
-    public void setTotalProteins(double totalProteins) {
-        this.totalProteins = totalProteins;
-    }
-
-    public double getTotalFats() {
-        return totalFats;
-    }
-
-    public void setTotalFats(double totalFats) {
-        this.totalFats = totalFats;
-    }
-
-    public double getTotalCarbohydrates() {
-        return totalCarbohydrates;
-    }
-
-    public void setTotalCarbohydrates(double totalCarbohydrates) {
-        this.totalCarbohydrates = totalCarbohydrates;
+    public void setMealProducts(List<MealProduct> mealProducts) {
+        this.mealProducts = mealProducts;
     }
 
     public RecipeVisibility getRecipeVisibility() {
@@ -91,5 +69,22 @@ public class Recipe extends Base {
 
     public void setImages(List<Byte[]> images) {
         this.images = images;
+    }
+
+    public void setNutritionalValue(NutritionalValue nutritionalValue) {
+        this.nutritionalValue = nutritionalValue;
+    }
+
+    public double getVolume() {
+        return volume;
+    }
+
+    public void setVolume(double volume) {
+        this.volume = volume;
+    }
+
+    @Override
+    public NutritionalValue getNutritionalValue() {
+        return nutritionalValue;
     }
 }

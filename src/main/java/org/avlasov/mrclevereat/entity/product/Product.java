@@ -1,18 +1,17 @@
 package org.avlasov.mrclevereat.entity.product;
 
 import org.avlasov.mrclevereat.entity.Base;
+import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
+import org.avlasov.mrclevereat.nutrition.NutritionalValue;
 
 /**
  * Created By artemvlasov on 22/12/2017
  **/
-public class Product extends Base {
+public class Product extends Base implements NutritionalFacts {
 
     private String name;
     private String description;
-    private double protein;
-    private double fat;
-    private double carbohydrate;
-    private double calories;
+    private NutritionalValue nutritionalValue;
 
     public String getName() {
         return name;
@@ -20,38 +19,6 @@ public class Product extends Base {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getProtein() {
-        return protein;
-    }
-
-    public void setProtein(double protein) {
-        this.protein = protein;
-    }
-
-    public double getFat() {
-        return fat;
-    }
-
-    public void setFat(double fat) {
-        this.fat = fat;
-    }
-
-    public double getCarbohydrate() {
-        return carbohydrate;
-    }
-
-    public void setCarbohydrate(double carbohydrate) {
-        this.carbohydrate = carbohydrate;
-    }
-
-    public double getCalories() {
-        return calories;
-    }
-
-    public void setCalories(double calories) {
-        this.calories = calories;
     }
 
     public String getDescription() {
@@ -62,4 +29,12 @@ public class Product extends Base {
         this.description = description;
     }
 
+    @Override
+    public NutritionalValue getNutritionalValue() {
+        return nutritionalValue;
+    }
+
+    public void setNutritionalValue(NutritionalValue nutritionalValue) {
+        this.nutritionalValue = nutritionalValue;
+    }
 }

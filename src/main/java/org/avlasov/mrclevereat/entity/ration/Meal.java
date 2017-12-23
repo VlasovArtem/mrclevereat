@@ -1,29 +1,29 @@
 package org.avlasov.mrclevereat.entity.ration;
 
 import org.avlasov.mrclevereat.entity.Base;
-import org.avlasov.mrclevereat.entity.product.Product;
+import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.recipe.Recipe;
+import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
+import org.avlasov.mrclevereat.nutrition.NutritionalValue;
 
 import java.util.List;
 
 /**
  * Created By artemvlasov on 22/12/2017
  **/
-public class Meal extends Base {
+public class Meal extends Base implements NutritionalFacts {
 
-    private List<Product> products;
+    private List<MealProduct> mealProducts;
     private List<Recipe> recipes;
-    private double totalProteins;
-    private double totalFats;
-    private double totalCarbohydrates;
-    private double totalCalories;
+    private NutritionalValue nutritionalValue;
+    private double volume;
 
-    public List<Product> getProducts() {
-        return products;
+    public List<MealProduct> getMealProducts() {
+        return mealProducts;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setMealProducts(List<MealProduct> mealProducts) {
+        this.mealProducts = mealProducts;
     }
 
     public List<Recipe> getRecipes() {
@@ -34,36 +34,20 @@ public class Meal extends Base {
         this.recipes = recipes;
     }
 
-    public double getTotalProteins() {
-        return totalProteins;
+    @Override
+    public NutritionalValue getNutritionalValue() {
+        return nutritionalValue;
     }
 
-    public void setTotalProteins(double totalProteins) {
-        this.totalProteins = totalProteins;
+    public void setNutritionalValue(NutritionalValue nutritionalValue) {
+        this.nutritionalValue = nutritionalValue;
     }
 
-    public double getTotalFats() {
-        return totalFats;
+    public double getVolume() {
+        return volume;
     }
 
-    public void setTotalFats(double totalFats) {
-        this.totalFats = totalFats;
+    public void setVolume(double volume) {
+        this.volume = volume;
     }
-
-    public double getTotalCarbohydrates() {
-        return totalCarbohydrates;
-    }
-
-    public void setTotalCarbohydrates(double totalCarbohydrates) {
-        this.totalCarbohydrates = totalCarbohydrates;
-    }
-
-    public double getTotalCalories() {
-        return totalCalories;
-    }
-
-    public void setTotalCalories(double totalCalories) {
-        this.totalCalories = totalCalories;
-    }
-
 }
