@@ -12,6 +12,7 @@ public class Product extends Base implements NutritionalFacts {
     private String name;
     private String description;
     private NutritionalValue nutritionalValue;
+    private String usdaNumber;
 
     public String getName() {
         return name;
@@ -36,5 +37,13 @@ public class Product extends Base implements NutritionalFacts {
 
     public void setNutritionalValue(NutritionalValue nutritionalValue) {
         this.nutritionalValue = nutritionalValue;
+    }
+
+    public String getUsdaNumber() {
+        return usdaNumber;
+    }
+
+    public void setUsdaNumber(String usdaNumber) {
+        this.usdaNumber = usdaNumber;
     }
 }
