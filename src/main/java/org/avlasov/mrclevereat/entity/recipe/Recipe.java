@@ -3,8 +3,8 @@ package org.avlasov.mrclevereat.entity.recipe;
 import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.recipe.enums.RecipeVisibility;
-import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
-import org.avlasov.mrclevereat.nutrition.NutritionalValue;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalFacts;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 
 import java.util.List;
 import java.util.Objects;

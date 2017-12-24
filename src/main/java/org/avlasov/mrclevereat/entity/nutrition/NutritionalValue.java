@@ -1,4 +1,4 @@
-package org.avlasov.mrclevereat.nutrition;
+package org.avlasov.mrclevereat.entity.nutrition;
 
 import java.util.Objects;
 

@@ -3,7 +3,7 @@ package org.avlasov.mrclevereat.utils;
 import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.ration.Meal;
 import org.avlasov.mrclevereat.entity.recipe.Recipe;
-import org.avlasov.mrclevereat.nutrition.NutritionalValue;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 
 import java.util.Collections;
 import java.util.List;

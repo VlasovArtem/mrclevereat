@@ -1,8 +1,8 @@
 package org.avlasov.mrclevereat.entity.product;
 
 import org.avlasov.mrclevereat.entity.Base;
-import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
-import org.avlasov.mrclevereat.nutrition.NutritionalValue;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalFacts;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 
 import java.util.Objects;
 

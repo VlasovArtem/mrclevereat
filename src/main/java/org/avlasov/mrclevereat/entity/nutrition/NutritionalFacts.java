@@ -1,4 +1,4 @@
-package org.avlasov.mrclevereat.nutrition;
+package org.avlasov.mrclevereat.entity.nutrition;
 
 /**
  * Created By artemvlasov on 23/12/2017

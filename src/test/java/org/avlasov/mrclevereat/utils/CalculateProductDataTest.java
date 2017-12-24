@@ -4,7 +4,7 @@ import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.product.Product;
 import org.avlasov.mrclevereat.entity.ration.Meal;
 import org.avlasov.mrclevereat.entity.recipe.Recipe;
-import org.avlasov.mrclevereat.nutrition.NutritionalValue;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
