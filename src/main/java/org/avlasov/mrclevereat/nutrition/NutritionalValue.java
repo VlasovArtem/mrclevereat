@@ -1,5 +1,7 @@
 package org.avlasov.mrclevereat.nutrition;
 
+import java.util.Objects;
+
 /**
  * Created By artemvlasov on 23/12/2017
  * data for 100 grams of product
@@ -51,5 +53,21 @@ public class NutritionalValue {
 
     public void setCalories(double calories) {
         this.calories = calories;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof NutritionalValue)) return false;
+        NutritionalValue that = (NutritionalValue) o;
+        return Double.compare(that.protein, protein) == 0 &&
+                Double.compare(that.fat, fat) == 0 &&
+                Double.compare(that.carbohydrate, carbohydrate) == 0 &&
+                Double.compare(that.calories, calories) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(protein, fat, carbohydrate, calories);
     }
 }

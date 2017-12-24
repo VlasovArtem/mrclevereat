@@ -4,6 +4,7 @@ import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.logs.WeightLog;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
@@ -46,5 +47,22 @@ public class DietData extends Base {
 
     public void setWeightLogs(List<WeightLog> weightLogs) {
         this.weightLogs = weightLogs;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof DietData)) return false;
+        DietData dietData = (DietData) o;
+        return activityScore == dietData.activityScore &&
+                Double.compare(dietData.targetWeight, targetWeight) == 0 &&
+                gramsPerWeek == dietData.gramsPerWeek &&
+                Objects.equals(weightLogs, dietData.weightLogs);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(activityScore, targetWeight, gramsPerWeek, weightLogs);
     }
 }

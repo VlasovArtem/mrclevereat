@@ -5,6 +5,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
@@ -69,5 +70,24 @@ public class Base {
 
     public void setDeleted(boolean deleted) {
         isDeleted = deleted;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Base)) return false;
+        Base base = (Base) o;
+        return isDeleted == base.isDeleted &&
+                Objects.equals(id, base.id) &&
+                Objects.equals(createdDate, base.createdDate) &&
+                Objects.equals(modifiedDate, base.modifiedDate) &&
+                Objects.equals(createdBy, base.createdBy) &&
+                Objects.equals(modifiedBy, base.modifiedBy);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(id, createdDate, modifiedDate, createdBy, modifiedBy, isDeleted);
     }
 }

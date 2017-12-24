@@ -4,6 +4,8 @@ import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
 import org.avlasov.mrclevereat.nutrition.NutritionalValue;
 
+import java.util.Objects;
+
 /**
  * Created By artemvlasov on 22/12/2017
  **/
@@ -45,5 +47,21 @@ public class Product extends Base implements NutritionalFacts {
 
     public void setUsdaNumber(String usdaNumber) {
         this.usdaNumber = usdaNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        Product product = (Product) o;
+        return Objects.equals(name, product.name) &&
+                Objects.equals(description, product.description) &&
+                Objects.equals(nutritionalValue, product.nutritionalValue) &&
+                Objects.equals(usdaNumber, product.usdaNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, nutritionalValue, usdaNumber);
     }
 }

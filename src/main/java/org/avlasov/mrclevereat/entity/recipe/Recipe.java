@@ -7,6 +7,7 @@ import org.avlasov.mrclevereat.nutrition.NutritionalFacts;
 import org.avlasov.mrclevereat.nutrition.NutritionalValue;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
@@ -86,5 +87,25 @@ public class Recipe extends Base implements NutritionalFacts {
     @Override
     public NutritionalValue getNutritionalValue() {
         return nutritionalValue;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Recipe)) return false;
+        Recipe recipe = (Recipe) o;
+        return isShared == recipe.isShared &&
+                Double.compare(recipe.volume, volume) == 0 &&
+                Objects.equals(name, recipe.name) &&
+                Objects.equals(description, recipe.description) &&
+                Objects.equals(mealProducts, recipe.mealProducts) &&
+                recipeVisibility == recipe.recipeVisibility &&
+                Objects.equals(images, recipe.images) &&
+                Objects.equals(nutritionalValue, recipe.nutritionalValue);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, description, isShared, mealProducts, recipeVisibility, images, nutritionalValue, volume);
     }
 }
