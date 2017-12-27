@@ -3,12 +3,14 @@ package org.avlasov.mrclevereat.entity.product;
 import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalFacts;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
  **/
+@Document
 public class Product extends Base implements NutritionalFacts {
 
     private String name;

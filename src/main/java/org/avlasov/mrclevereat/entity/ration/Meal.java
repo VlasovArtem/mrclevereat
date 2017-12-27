@@ -1,10 +1,12 @@
 package org.avlasov.mrclevereat.entity.ration;
 
 import org.avlasov.mrclevereat.entity.Base;
-import org.avlasov.mrclevereat.entity.product.MealProduct;
-import org.avlasov.mrclevereat.entity.recipe.Recipe;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalFacts;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
+import org.avlasov.mrclevereat.entity.product.MealProduct;
+import org.avlasov.mrclevereat.entity.recipe.Recipe;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,9 +14,11 @@ import java.util.Objects;
 /**
  * Created By artemvlasov on 22/12/2017
  **/
+@Document
 public class Meal extends Base implements NutritionalFacts {
 
     private List<MealProduct> mealProducts;
+    @DBRef
     private List<Recipe> recipes;
     private NutritionalValue nutritionalValue;
     private double volume;

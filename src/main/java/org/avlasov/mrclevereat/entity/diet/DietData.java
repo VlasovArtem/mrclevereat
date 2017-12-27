@@ -1,4 +1,4 @@
-package org.avlasov.mrclevereat.entity.user;
+package org.avlasov.mrclevereat.entity.diet;
 
 import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.logs.WeightLog;
@@ -14,7 +14,7 @@ public class DietData extends Base {
     //from 1 to 10. 10 - high activity 7 days a week, 1 - no activity.
     private byte activityScore;
     private double targetWeight;
-    private byte gramsPerWeek;
+    private int gramsPerWeek;
     private List<WeightLog> weightLogs;
 
     public byte getActivityScore() {
@@ -33,11 +33,11 @@ public class DietData extends Base {
         this.targetWeight = targetWeight;
     }
 
-    public byte getGramsPerWeek() {
+    public int getGramsPerWeek() {
         return gramsPerWeek;
     }
 
-    public void setGramsPerWeek(byte gramsPerWeek) {
+    public void setGramsPerWeek(int gramsPerWeek) {
         this.gramsPerWeek = gramsPerWeek;
     }
 

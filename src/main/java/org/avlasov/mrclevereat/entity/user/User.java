@@ -1,15 +1,22 @@
 package org.avlasov.mrclevereat.entity.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.avlasov.mrclevereat.entity.Base;
+import org.avlasov.mrclevereat.entity.diet.DietData;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDate;
 
 /**
  * Created By artemvlasov on 22/12/2017
  **/
+@Document
 public class User extends Base {
 
+    @Indexed(unique = true)
     private String email;
+    @JsonIgnore
     private byte[] password;
     private String lastName;
     private String firstName;
@@ -20,6 +27,11 @@ public class User extends Base {
     //Height in centimeters
     private short height;
     private DietData dietData;
+
+    public User(String email, byte[] password) {
+        this.email = email;
+        this.password = password;
+    }
 
     public String getEmail() {
         return email;
