@@ -16,5 +16,11 @@ public interface UserRepository extends MongoRepository<User, ObjectId> {
     boolean existsByEmail(String email);
     @Query(value = "{ email : ?0 }", fields = " { dietData : 1 } ")
     Optional<User> findDietDataByEmail(String email);
+    @Query(value = "{ email : ?0 }", fields = " { 'dietData.weightLogs' : 1 } ")
+    Optional<User> findWeightLogsByEmail(String email);
+    @Query(value = "{ _id : ?0 }", fields = " { dietData : 1 } ")
+    Optional<User> findDietDataById(ObjectId id);
+    @Query(value = "{ _id : ?0 }", fields = " { 'dietData.weightLogs' : 1 } ")
+    Optional<User> findWeightLogsById(ObjectId id);
 
 }
