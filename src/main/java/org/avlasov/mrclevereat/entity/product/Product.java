@@ -3,19 +3,24 @@ package org.avlasov.mrclevereat.entity.product;
 import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalFacts;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
+ * USDA Number is number from website https://ndb.nal.usda.gov/ndb/search/list?fgcd=Branded+Food+Products+Database&ds=Branded+Food+Products
+ * API - https://ndb.nal.usda.gov/ndb/doc/
  **/
 @Document
 public class Product extends Base implements NutritionalFacts {
 
+    @Indexed(unique = true)
     private String name;
     private String description;
     private NutritionalValue nutritionalValue;
+    @Indexed(unique = true)
     private String usdaNumber;
 
     public String getName() {

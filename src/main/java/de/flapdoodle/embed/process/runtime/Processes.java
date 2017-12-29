@@ -24,6 +24,7 @@ import java.util.HashSet;
 
 /**
  * Created By artemvlasov on 27/12/2017
+ * PLEASE remove when fix will be applied to the base framework
  **/
 public class Processes {
 
