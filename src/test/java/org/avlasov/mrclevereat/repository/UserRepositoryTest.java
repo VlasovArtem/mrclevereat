@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ class UserRepositoryTest extends RepositoryTestCase<UserRepository, User> {
     }
 
     @Override
-    User getEntity() {
+    Collection<User> getEntity() {
         User user = new User("test@mail.com", "password".getBytes());
         user.setId(id);
         DietData dietData = new DietData();
@@ -40,7 +41,7 @@ class UserRepositoryTest extends RepositoryTestCase<UserRepository, User> {
         weightLog.setCreatedDate(LocalDateTime.now());
         dietData.setWeightLogs(Collections.singletonList(weightLog));
         user.setDietData(dietData);
-        return user;
+        return Collections.singleton(user);
     }
 
     @Test

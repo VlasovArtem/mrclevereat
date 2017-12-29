@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -24,16 +26,18 @@ class ProductRepositoryTest extends RepositoryTestCase<ProductRepository, Produc
 
     @Test
     void save_WithExistingName_ThrowException() {
-        Product entity = getEntity();
-        entity.setUsdaNumber("04999");
-        assertThrows(DuplicateKeyException.class, () -> mongoRepository.save(entity));
+        Optional<Product> entity = getEntity().stream()
+                .findFirst();
+        entity.get().setUsdaNumber("04999");
+        assertThrows(DuplicateKeyException.class, () -> mongoRepository.save(entity.get()));
     }
 
     @Test
     void save_WithExistingUsdaNumber_ThrowException() {
-        Product entity = getEntity();
-        entity.setName("test2");
-        assertThrows(DuplicateKeyException.class, () -> mongoRepository.save(entity));
+        Optional<Product> entity = getEntity().stream()
+                .findFirst();
+        entity.get().setName("test2");
+        assertThrows(DuplicateKeyException.class, () -> mongoRepository.save(entity.get()));
     }
 
     @Test
@@ -83,7 +87,7 @@ class ProductRepositoryTest extends RepositoryTestCase<ProductRepository, Produc
     }
 
     @Override
-    Product getEntity() {
+    Collection<Product> getEntity() {
         Product product = new Product();
         product.setName("Chicken, broilers or fryers, meat only, raw");
         product.setDescription("Chicken, broilers or fryers, meat only, raw");
@@ -95,6 +99,6 @@ class ProductRepositoryTest extends RepositoryTestCase<ProductRepository, Produc
         nutritionalValue.setProtein(21.39);
         product.setNutritionalValue(nutritionalValue);
         product.setId(ObjectId.get());
-        return product;
+        return Collections.singletonList(product);
     }
 }

@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.Collection;
+
 /**
  * Created By artemvlasov on 29/12/2017
  **/
@@ -24,11 +26,11 @@ abstract class RepositoryTestCase<R extends MongoRepository, T> {
         this.mongoRepository = mongoRepository;
     }
 
-    abstract T getEntity();
+    abstract Collection<T> getEntity();
 
     @BeforeEach
     void setUp() {
-        mongoRepository.save(getEntity());
+        mongoRepository.saveAll(getEntity());
     }
 
     @AfterEach
