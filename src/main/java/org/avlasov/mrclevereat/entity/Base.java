@@ -3,6 +3,7 @@ package org.avlasov.mrclevereat.entity;
 import org.avlasov.mrclevereat.entity.user.User;
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.*;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -19,8 +20,10 @@ public class Base {
     @LastModifiedDate
     private LocalDateTime modifiedDate;
     @CreatedBy
+    @DBRef
     private User createdBy;
     @LastModifiedBy
+    @DBRef
     private User modifiedBy;
     private boolean isDeleted;
 
