@@ -1,6 +1,6 @@
 package org.avlasov.mrclevereat.config;
 
-import org.avlasov.mrclevereat.config.database.DevMongoDBConfig;
+import org.avlasov.mrclevereat.config.database.DevDataSourceConfig;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Import;
  **/
 @Configuration
 @ComponentScan(basePackages = {"org.avlasov.mrclevereat.utils"})
-@Import(DevMongoDBConfig.class)
+@Import(DevDataSourceConfig.class)
 public class AppConfig {
 }

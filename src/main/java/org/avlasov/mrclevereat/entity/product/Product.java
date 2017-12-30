@@ -1,11 +1,9 @@
 package org.avlasov.mrclevereat.entity.product;
 
 import org.avlasov.mrclevereat.entity.Base;
-import org.avlasov.mrclevereat.entity.nutrition.NutritionalFacts;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
-import org.springframework.data.mongodb.core.index.Indexed;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.Objects;
 
 /**
@@ -13,53 +11,84 @@ import java.util.Objects;
  * USDA Number is number from website https://ndb.nal.usda.gov/ndb/search/list?fgcd=Branded+Food+Products+Database&ds=Branded+Food+Products
  * API - https://ndb.nal.usda.gov/ndb/doc/
  **/
-@Document
-public class Product extends Base implements NutritionalFacts {
+@Entity
+@Table(indexes = {
+        @Index(name = "NAME_IDX", columnList = "name"),
+        @Index(name = "USDANUM_IDX", columnList = "usdaNumber")
+})
+public class Product extends Base {
 
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String name;
     private String description;
+    @Embedded
     private NutritionalValue nutritionalValue;
-    @Indexed(unique = true)
+    @Column(unique = true)
     private String usdaNumber;
+
+    private Product() {}
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
     public NutritionalValue getNutritionalValue() {
         return nutritionalValue;
-    }
-
-    public void setNutritionalValue(NutritionalValue nutritionalValue) {
-        this.nutritionalValue = nutritionalValue;
     }
 
     public String getUsdaNumber() {
         return usdaNumber;
     }
 
-    public void setUsdaNumber(String usdaNumber) {
-        this.usdaNumber = usdaNumber;
+    public static ProductBuilder builder(String name) {
+        return new ProductBuilder(name);
+    }
+
+    public static class ProductBuilder {
+
+        private String name;
+        private String description;
+        private NutritionalValue nutritionalValue;
+        private String usdaNumber;
+
+        public ProductBuilder(String name) {
+            this.name = name;
+        }
+
+        public ProductBuilder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public ProductBuilder nutritionalValue(NutritionalValue nutritionalValue) {
+            this.nutritionalValue = nutritionalValue;
+            return this;
+        }
+
+        public ProductBuilder usdaNumber(String usdaNumber) {
+            this.usdaNumber = usdaNumber;
+            return this;
+        }
+
+        public Product build() {
+            Product product = new Product();
+            product.name = name;
+            product.description = description;
+            product.nutritionalValue = nutritionalValue;
+            product.usdaNumber = usdaNumber;
+            return product;
+        }
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
+        if (!super.equals(o)) return false;
         Product product = (Product) o;
         return Objects.equals(name, product.name) &&
                 Objects.equals(description, product.description) &&
@@ -69,6 +98,6 @@ public class Product extends Base implements NutritionalFacts {
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, description, nutritionalValue, usdaNumber);
+        return Objects.hash(super.hashCode(), name, description, nutritionalValue, usdaNumber);
     }
 }

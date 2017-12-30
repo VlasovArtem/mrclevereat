@@ -13,46 +13,62 @@ public class NutritionalValue {
     private double carbohydrate;
     private double calories;
 
-    public NutritionalValue() {
-    }
-
-    public NutritionalValue(double protein, double fat, double carbohydrate, double calories) {
-        this.protein = protein;
-        this.fat = fat;
-        this.carbohydrate = carbohydrate;
-        this.calories = calories;
-    }
+    private NutritionalValue() {}
 
     public double getProtein() {
         return protein;
-    }
-
-    public void setProtein(double protein) {
-        this.protein = protein;
     }
 
     public double getFat() {
         return fat;
     }
 
-    public void setFat(double fat) {
-        this.fat = fat;
-    }
-
     public double getCarbohydrate() {
         return carbohydrate;
-    }
-
-    public void setCarbohydrate(double carbohydrate) {
-        this.carbohydrate = carbohydrate;
     }
 
     public double getCalories() {
         return calories;
     }
 
-    public void setCalories(double calories) {
-        this.calories = calories;
+    public static NutritionalValueBuilder builder() {
+        return new NutritionalValueBuilder();
+    }
+
+    public static class NutritionalValueBuilder {
+        private double protein;
+        private double fat;
+        private double carbohydrate;
+        private double calories;
+
+        public NutritionalValueBuilder protein(double protein) {
+            this.protein = protein;
+            return this;
+        }
+
+        public NutritionalValueBuilder fat(double fat) {
+            this.fat = fat;
+            return this;
+        }
+
+        public NutritionalValueBuilder carbohydrate(double carbohydrate) {
+            this.carbohydrate = carbohydrate;
+            return this;
+        }
+
+        public NutritionalValueBuilder calories(double calories) {
+            this.calories = calories;
+            return this;
+        }
+
+        public NutritionalValue build() {
+            NutritionalValue nutritionalValue = new NutritionalValue();
+            nutritionalValue.protein = protein;
+            nutritionalValue.fat = fat;
+            nutritionalValue.carbohydrate = carbohydrate;
+            nutritionalValue.calories = calories;
+            return nutritionalValue;
+        }
     }
 
     @Override

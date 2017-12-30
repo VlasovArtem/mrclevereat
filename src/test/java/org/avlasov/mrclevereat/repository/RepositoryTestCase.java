@@ -4,6 +4,7 @@ import org.avlasov.mrclevereat.config.AppConfig;
 import org.avlasov.mrclevereat.repository.config.EmbeddedMongoDatabaseConfig;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
 import org.springframework.data.mongodb.repository.MongoRepository;
@@ -18,6 +19,7 @@ import java.util.Collection;
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {AppConfig.class, EmbeddedMongoDatabaseConfig.class})
 @DataMongoTest
+@Disabled
 abstract class RepositoryTestCase<R extends MongoRepository, T> {
 
     R mongoRepository;

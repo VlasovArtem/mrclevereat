@@ -24,15 +24,15 @@ public class CalculateProductData {
      *
      * @param meal Meal
      */
-    public void calculateMealTotals(Meal meal) {
+    public void calculateMealNutritionalValue(Meal meal) {
         Objects.requireNonNull(meal);
         NutritionalValueData nutritionalValueData = new NutritionalValueData();
         calculateMealProducts(meal.getMealProducts())
                 .ifPresent(nvd -> mergeNutritionalValueData().apply(nutritionalValueData, nvd));
         calculateRecipes(meal.getRecipes())
                 .ifPresent(nvd -> mergeNutritionalValueData().apply(nutritionalValueData, nvd));
-        meal.setVolume(nutritionalValueData.nutritionalVolume);
         meal.setNutritionalValue(nutritionalValueData.nutritionalValue);
+        meal.setVolume(nutritionalValueData.nutritionalVolume);
     }
 
     /**
@@ -40,14 +40,14 @@ public class CalculateProductData {
      *
      * @param recipe the recipe
      */
-    public void calculateRecipesTotals(Recipe recipe) {
+    public void calculateRecipeNutritionalValue(Recipe recipe) {
         Objects.requireNonNull(recipe);
         Optional<NutritionalValueData> nutritionalValueData = calculateMealProducts(recipe.getMealProducts());
         if (nutritionalValueData.isPresent()) {
             recipe.setVolume(nutritionalValueData.get().nutritionalVolume);
             recipe.setNutritionalValue(nutritionalValueData.get().nutritionalValue);
         } else {
-            recipe.setNutritionalValue(new NutritionalValue());
+            recipe.setNutritionalValue(NutritionalValue.builder().build());
         }
     }
 
@@ -75,7 +75,7 @@ public class CalculateProductData {
         return Optional.ofNullable(recipes)
                 .orElse(Collections.emptyList())
                 .parallelStream()
-                .peek(this::calculateRecipesTotals)
+                .peek(this::calculateRecipeNutritionalValue)
                 .map(recipe -> new NutritionalValueData(recipe.getNutritionalValue(), recipe.getVolume()))
                 .reduce(mergeNutritionalValueData());
     }
@@ -98,7 +98,7 @@ public class CalculateProductData {
      */
     private BinaryOperator<NutritionalValueData> mergeNutritionalValueData() {
         return (identity, nvd) -> {
-            mergeNutritionalValues(identity.nutritionalValue, nvd.nutritionalValue);
+            identity.nutritionalValue = mergeNutritionalValues(identity.nutritionalValue, nvd.nutritionalValue);
             identity.nutritionalVolume = identity.nutritionalVolume + nvd.nutritionalVolume;
             return identity;
         };
@@ -107,14 +107,16 @@ public class CalculateProductData {
     /**
      * Merge {@link NutritionalValue} into one object. Add all required data from source to target component
      *
-     * @param target {@link NutritionalValue}
-     * @param source {@link NutritionalValue}
+     * @param nv1 {@link NutritionalValue}
+     * @param nv2 {@link NutritionalValue}
      */
-    private void mergeNutritionalValues(NutritionalValue target, NutritionalValue source) {
-        target.setCalories(target.getCalories() + source.getCalories());
-        target.setCarbohydrate(target.getCarbohydrate() + source.getCarbohydrate());
-        target.setProtein(target.getProtein() + source.getProtein());
-        target.setFat(target.getFat() + source.getFat());
+    private NutritionalValue mergeNutritionalValues(NutritionalValue nv1, NutritionalValue nv2) {
+        return NutritionalValue.builder()
+                .calories(nv1.getCalories() + nv2.getCalories())
+                .carbohydrate(nv1.getCarbohydrate() + nv2.getCarbohydrate())
+                .fat(nv1.getFat() + nv2.getFat())
+                .protein(nv1.getProtein() + nv2.getProtein())
+                .build();
     }
 
     /**
@@ -139,7 +141,7 @@ public class CalculateProductData {
          * Instantiates a new Nutritional value data.
          */
         NutritionalValueData() {
-            nutritionalValue = new NutritionalValue();
+            nutritionalValue = NutritionalValue.builder().build();
         }
     }
 
@@ -148,9 +150,11 @@ public class CalculateProductData {
      */
     private class NutritionalValueDataBuilder {
 
-        private NutritionalValue nutritionalValue;
         private double volume;
-        private double calculatedVolumePercent;
+        private double protein;
+        private double fat;
+        private double carbohydrate;
+        private double calories;
 
         /**
          * Instantiates a new Nutritional value data builder.
@@ -159,8 +163,6 @@ public class CalculateProductData {
          */
         NutritionalValueDataBuilder(double volume) {
             this.volume = volume;
-            this.nutritionalValue = new NutritionalValue();
-            calculatedVolumePercent = volume / 100;
         }
 
         /**
@@ -186,7 +188,7 @@ public class CalculateProductData {
          * @return the nutritional value data builder
          */
         NutritionalValueDataBuilder withProtein(double protein) {
-            nutritionalValue.setProtein(protein * calculatedVolumePercent);
+            this.protein = protein;
             return this;
         }
 
@@ -197,7 +199,7 @@ public class CalculateProductData {
          * @return the nutritional value data builder
          */
         NutritionalValueDataBuilder withFat(double fat) {
-            nutritionalValue.setFat(fat * calculatedVolumePercent);
+            this.fat = fat;
             return this;
         }
 
@@ -208,7 +210,7 @@ public class CalculateProductData {
          * @return the nutritional value data builder
          */
         NutritionalValueDataBuilder withCarbohydrate(double carbohydrate) {
-            nutritionalValue.setCarbohydrate(carbohydrate * calculatedVolumePercent);
+            this.carbohydrate = carbohydrate;
             return this;
         }
 
@@ -219,7 +221,7 @@ public class CalculateProductData {
          * @return the nutritional value data builder
          */
         NutritionalValueDataBuilder withCalories(double calories) {
-            nutritionalValue.setCalories(calories * calculatedVolumePercent);
+            this.calories = calories;
             return this;
         }
 
@@ -229,6 +231,13 @@ public class CalculateProductData {
          * @return the nutritional value data
          */
         NutritionalValueData build() {
+            double volumeFactor = volume / 100;
+            NutritionalValue nutritionalValue = NutritionalValue.builder()
+                    .protein(protein * volumeFactor)
+                    .carbohydrate(carbohydrate * volumeFactor)
+                    .calories(calories * volumeFactor)
+                    .fat(fat * volumeFactor)
+                    .build();
             return new NutritionalValueData(nutritionalValue, volume);
         }
 
