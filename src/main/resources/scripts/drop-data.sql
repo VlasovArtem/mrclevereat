@@ -1,9 +1,9 @@
-drop table comment if exists;
-drop table image if exists;
-drop table meal if exists;
-drop table meal_product if exists;
-drop table recipe_product if exists;
-drop table product if exists;
-drop table recipe if exists;
-drop table user if exists;
-drop table weight_log if exists;
+DELETE FROM comment;
+DELETE FROM image;
+DELETE FROM meal;
+DELETE FROM meal_product;
+DELETE FROM recipe_product;
+DELETE FROM product;
+DELETE FROM recipe;
+DELETE FROM user;
+DELETE FROM weight_log;
