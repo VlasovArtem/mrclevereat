@@ -6,7 +6,7 @@ INSERT INTO comment VALUES
 INSERT INTO image VALUES
   (1, 1, '2017-12-31', false, 0, null, '70617373776f7264', 1);
 INSERT INTO meal VALUES
-  (1, 1, '2017-12-30', false, 0, null, 300, 50, 10, 160, 200, 1),
+  (1, 1, '2017-12-20', false, 0, null, 300, 50, 10, 160, 200, 1),
   (2, 1, '2017-12-31', false, 0, null, 800, 230, 10, 100, 400, 1);
 INSERT INTO product VALUES
   (1, 1, '2017-10-30', false, 0, null, 'cucumber', 'cucumber', 16, 3.6, 0, 0.7, '11205'),
