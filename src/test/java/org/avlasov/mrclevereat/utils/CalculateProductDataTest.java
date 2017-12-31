@@ -1,16 +1,12 @@
 package org.avlasov.mrclevereat.utils;
 
-import org.avlasov.mrclevereat.entity.nutrition.NutritionalValueBuilder;
+import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.product.Product;
 import org.avlasov.mrclevereat.entity.ration.Meal;
 import org.avlasov.mrclevereat.entity.recipe.Recipe;
-import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -21,7 +17,7 @@ class CalculateProductDataTest {
 
     @Test
     void calculateMealTotals_WithRequiredData_CalculateNutritionalValue() {
-        Meal meal = getMeal();
+        Meal meal = getMeal().build();
         new CalculateProductData().calculateMealNutritionalValue(meal);
         assertEquals(meal.getVolume(), 410);
         assertEquals(meal.getNutritionalValue().getCalories(), 382);
@@ -29,8 +25,9 @@ class CalculateProductDataTest {
 
     @Test
     void calculateMealTotals_WithProductsOnly_CalculateNutritionalValue() {
-        Meal meal = getMeal();
-        meal.setRecipes(null);
+        Meal meal = getMeal()
+                .recipes(null)
+                .build();
         new CalculateProductData().calculateMealNutritionalValue(meal);
         assertEquals(meal.getVolume(), 180);
         assertEquals(meal.getNutritionalValue().getFat(), 4.73);
@@ -38,8 +35,9 @@ class CalculateProductDataTest {
 
     @Test
     void calculateMealTotals_WithRecipesOnly_CalculateNutritionalValue() {
-        Meal meal = getMeal();
-        meal.setMealProducts(null);
+        Meal meal = getMeal()
+                .mealProducts(null)
+                .build();
         new CalculateProductData().calculateMealNutritionalValue(meal);
         assertEquals(meal.getVolume(), 230);
         assertEquals(meal.getNutritionalValue().getCarbohydrate(), 9.129999999999999);
@@ -47,9 +45,10 @@ class CalculateProductDataTest {
 
     @Test
     void calculateMealTotals_WithOutData_NoCalculation() {
-        Meal meal = getMeal();
-        meal.setRecipes(null);
-        meal.setMealProducts(null);
+        Meal meal = getMeal()
+                .recipes(null)
+                .mealProducts(null)
+                .build();
         new CalculateProductData().calculateMealNutritionalValue(meal);
         assertEquals(meal.getVolume(), 0);
         assertEquals(meal.getNutritionalValue().getCarbohydrate(), 0);
@@ -62,7 +61,7 @@ class CalculateProductDataTest {
 
     @Test
     void calculateRecipesTotals_WithRequiredData_CalculateNutritionalValue() {
-        Recipe recipe = getRecipe();
+        Recipe recipe = getRecipe().build();
         new CalculateProductData().calculateRecipeNutritionalValue(recipe);
         assertEquals(recipe.getVolume(), 230);
         assertEquals(recipe.getNutritionalValue().getProtein(), 1.88);
@@ -71,8 +70,9 @@ class CalculateProductDataTest {
 
     @Test
     void calculateRecipesTotals_WithOutData_NoCalculation() {
-        Recipe recipe = getRecipe();
-        recipe.setMealProducts(null);
+        Recipe recipe = getRecipe()
+                .mealProducts(null)
+                .build();
         new CalculateProductData().calculateRecipeNutritionalValue(recipe);
         assertEquals(recipe.getVolume(), 0);
         assertEquals(recipe.getNutritionalValue().getProtein(), 0);
@@ -83,43 +83,35 @@ class CalculateProductDataTest {
         Assertions.assertThrows(NullPointerException.class, () -> new CalculateProductData().calculateRecipeNutritionalValue(null));
     }
 
-    private Meal getMeal() {
-        Meal meal = new Meal.MealBuilder().createMeal();
-        meal.setMealProducts(Arrays.asList(getMealProduct(130, getProduct("chicken breast", 31, 3.6, 0, 165)),
-                getMealProduct(50, getProduct("potato", 2, 0.1, 17,77))));
-        meal.setRecipes(Collections.singletonList(getRecipe()));
-        return meal;
+    private Meal.MealBuilder getMeal() {
+        return Meal.builder()
+                .addMealProduct(getMealProduct(130, getProduct("chicken breast", 31, 3.6, 0, 165).build()))
+                .addMealProduct(getMealProduct(50, getProduct("potato", 2, 0.1, 17,77).build()))
+                .addRecipe(getRecipe().build());
     }
 
-    private Recipe getRecipe() {
-        Recipe recipe = new Recipe.RecipeBuilder().createRecipe();
-        recipe.setName("Vegetable Salad");
-        recipe.setMealProducts(Arrays.asList(
-                getMealProduct(50, getProduct("cucumber", 0.7, 0, 3.6, 16)),
-                getMealProduct(70, getProduct("tomato", 0.9, 0.2, 3.9, 18)),
-                getMealProduct(100, getProduct("bell pepper", 0.9, 0.2, 4.6, 20)),
-                getMealProduct(10, getProduct("olive oil", 0, 100, 0, 884))
-                ));
-        return recipe;
+    private Recipe.RecipeBuilder getRecipe() {
+        return Recipe.builder()
+                .name("Vegetable Salad")
+                .addMealProduct(getMealProduct(50, getProduct("cucumber", 0.7, 0, 3.6, 16).build()))
+                .addMealProduct(getMealProduct(70, getProduct("tomato", 0.9, 0.2, 3.9, 18).build()))
+                .addMealProduct(getMealProduct(100, getProduct("bell pepper", 0.9, 0.2, 4.6, 20).build()))
+                .addMealProduct(getMealProduct(10, getProduct("olive oil", 0, 100, 0, 884).build()));
     }
 
     private MealProduct getMealProduct(double volume, Product product) {
-        MealProduct mealProduct = new MealProduct();
-        mealProduct.setVolume(volume);
-        mealProduct.setProduct(product);
-        return mealProduct;
+        return new MealProduct(product, volume);
     }
 
 
-    private Product getProduct(String name, double protein, double fat, double carbohydrate, double calories) {
-        Product product = new Product.ProductBuilder().createProduct();
-        product.setName(name);
-        NutritionalValue nutritionalValue = new NutritionalValueBuilder().createNutritionalValue();
-        nutritionalValue.setProtein(protein);
-        nutritionalValue.setFat(fat);
-        nutritionalValue.setCarbohydrate(carbohydrate);
-        nutritionalValue.setCalories(calories);
-        product.setNutritionalValue(nutritionalValue);
-        return product;
+    private Product.ProductBuilder getProduct(String name, double protein, double fat, double carbohydrate, double calories) {
+        Product.ProductBuilder builder = Product.builder(name);
+        NutritionalValue nutritionalValue = NutritionalValue.builder()
+                .protein(protein)
+                .fat(fat)
+                .carbohydrate(carbohydrate)
+                .calories(calories)
+                .build();
+        return builder.nutritionalValue(nutritionalValue);
     }
 }

@@ -30,8 +30,7 @@ public class User extends Base {
     private double weight;
     //Height in centimeters
     private short height;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "diet_data_id", referencedColumnName = "id")
+    @Embedded
     private DietData dietData;
 
     private User(){}
@@ -72,52 +71,77 @@ public class User extends Base {
         return dietData;
     }
 
+    public void setDietData(DietData dietData) {
+        this.dietData = dietData;
+    }
+
+    public static UserBuilder builder(String email, byte[] password) {
+        return new UserBuilder(email, password);
+    }
+
     public static class UserBuilder {
 
-        private User user;
+        private final byte[] password;
+        private String email;
+        private String lastName;
+        private String firstName;
+        private LocalDate birthday;
+        private int age;
+        private double weight;
+        private short height;
+        private DietData dietData;
 
         public UserBuilder(String email, byte[] password) {
-            user = new User();
-            user.email = email;
-            user.password = password;
+            this.email = email;
+            this.password = password;
         }
 
         public UserBuilder lastName(String lastName) {
-            user.lastName = lastName;
+            this.lastName = lastName;
             return this;
         }
 
         public UserBuilder firstName(String firstName) {
-            user.firstName = firstName;
+            this.firstName = firstName;
             return this;
         }
 
         public UserBuilder birthday(LocalDate birthday) {
-            user.birthday = birthday;
+            this.birthday = birthday;
             return this;
         }
 
         public UserBuilder age(int age) {
-            user.age = age;
+            this.age = age;
             return this;
         }
 
         public UserBuilder weight(double weight) {
-            user.weight = weight;
+            this.weight = weight;
             return this;
         }
 
         public UserBuilder height(short height) {
-            user.height = height;
+            this.height = height;
             return this;
         }
 
         public UserBuilder dietData(DietData dietData) {
-            user.dietData = dietData;
+            this.dietData = dietData;
             return this;
         }
 
         public User build() {
+            User user = new User();
+            user.dietData = dietData;
+            user.age = age;
+            user.email = email;
+            user.password = password;
+            user.lastName = lastName;
+            user.firstName = firstName;
+            user.birthday = birthday;
+            user.weight = weight;
+            user.height = height;
             return user;
         }
 

@@ -7,6 +7,7 @@ import org.avlasov.mrclevereat.entity.recipe.Recipe;
 import org.avlasov.mrclevereat.entity.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -59,6 +60,10 @@ public class Meal extends Base {
         this.volume = volume;
     }
 
+    public static MealBuilder builder() {
+        return new MealBuilder();
+    }
+
     public static class MealBuilder {
 
         private List<MealProduct> mealProducts;
@@ -72,8 +77,22 @@ public class Meal extends Base {
             return this;
         }
 
+        public MealBuilder addMealProduct(MealProduct mealProduct) {
+            if (Objects.isNull(mealProducts))
+                mealProducts = new ArrayList<>();
+            mealProducts.add(mealProduct);
+            return this;
+        }
+
         public MealBuilder recipes(List<Recipe> recipes) {
             this.recipes = recipes;
+            return this;
+        }
+
+        public MealBuilder addRecipe(Recipe recipe) {
+            if (Objects.isNull(recipes))
+                recipes = new ArrayList<>();
+            recipes.add(recipe);
             return this;
         }
 

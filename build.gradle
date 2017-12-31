@@ -31,11 +31,13 @@ ext.mongoembed = '2.0.0'
 ext.springboot = '1.5.9.RELEASE'
 ext.springdata = '2.0.2.RELEASE'
 ext.h2 = '1.4.196'
+ext.hibernate = '5.2.10.Final'
 
 dependencyManagement {
     imports {
         mavenBom 'org.springframework:spring-framework-bom:5.0.2.RELEASE'
         mavenBom 'org.springframework.security:spring-security-bom:5.0.0.RELEASE'
+        mavenBom 'com.fasterxml.jackson:jackson-bom:2.9.3'
     }
 }
 
@@ -54,17 +56,21 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-web'
     compile group: 'org.springframework.security', name: 'spring-security-config'
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.10'
+    compile group: 'org.springframework', name: 'spring-orm'
     compile group: 'org.springframework.data', name: 'spring-data-jpa', version: springdata
     compile group: 'org.springframework.data', name: 'spring-data-commons', version: springdata
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2', version: springboot
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: springboot
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-logging', version: springboot
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: springboot
+    compile ("org.springframework.boot:spring-boot-starter-data-jpa:${property('springboot')}") {
+        exclude group: 'org.hibernate'
+    }
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: log4j
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: log4j
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: jackson
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310'
     compile group: 'javax.xml.bind', name: 'jaxb-api', version: xmlbind
     compile group: 'com.h2database', name: 'h2', version: h2
+    compile group: 'org.hibernate', name: 'hibernate-core', version: hibernate
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test', version: springboot
     testCompile group: 'org.springframework.security', name: 'spring-security-test'
     testCompile group: 'org.springframework', name: 'spring-test'

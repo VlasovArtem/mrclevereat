@@ -10,6 +10,7 @@ import org.avlasov.mrclevereat.entity.social.Comment;
 import org.avlasov.mrclevereat.entity.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -112,6 +113,10 @@ public class Recipe extends Base {
         this.nutritionalValue = nutritionalValue;
     }
 
+    public static RecipeBuilder builder() {
+        return new RecipeBuilder();
+    }
+
     public static class RecipeBuilder {
 
         private boolean isShared;
@@ -125,6 +130,10 @@ public class Recipe extends Base {
         private List<Image> images;
         private List<MealProduct> mealProducts;
         private List<Comment> comments;
+
+        public RecipeBuilder() {
+            mealProducts = new ArrayList<>();
+        }
 
         public RecipeBuilder isShared(boolean isShared) {
             this.isShared = isShared;
@@ -173,6 +182,13 @@ public class Recipe extends Base {
 
         public RecipeBuilder mealProducts(List<MealProduct> mealProducts) {
             this.mealProducts = mealProducts;
+            return this;
+        }
+
+        public RecipeBuilder addMealProduct(MealProduct mealProduct) {
+            if (Objects.isNull(mealProducts))
+                mealProducts = new ArrayList<>();
+            mealProducts.add(mealProduct);
             return this;
         }
 
