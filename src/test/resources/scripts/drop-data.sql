@@ -1,0 +1,9 @@
+DELETE FROM comment;
+DELETE FROM image;
+DELETE FROM meal;
+DELETE FROM meal_product;
+DELETE FROM recipe_product;
+DELETE FROM product;
+DELETE FROM recipe;
+DELETE FROM user;
+DELETE FROM weight_log;
