@@ -90,7 +90,7 @@ create table product (
   carbohydrate DOUBLE NOT NULL,
   fat DOUBLE NOT NULL,
   protein DOUBLE NOT NULL,
-  usda_number VARCHAR(255)
+  usda_number VARCHAR(255) UNIQUE
 );
 
 create table meal_product (
