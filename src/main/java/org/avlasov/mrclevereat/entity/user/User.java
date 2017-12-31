@@ -33,7 +33,7 @@ public class User extends Base {
     @Embedded
     private DietData dietData;
 
-    private User(){}
+    public User(){}
 
     public String getEmail() {
         return email;
