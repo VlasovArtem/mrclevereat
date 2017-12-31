@@ -3,6 +3,7 @@ package org.avlasov.mrclevereat.utils;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.product.Product;
+import org.avlasov.mrclevereat.entity.product.RecipeProduct;
 import org.avlasov.mrclevereat.entity.ration.Meal;
 import org.avlasov.mrclevereat.entity.recipe.Recipe;
 import org.junit.jupiter.api.Assertions;
@@ -93,14 +94,18 @@ class CalculateProductDataTest {
     private Recipe.RecipeBuilder getRecipe() {
         return Recipe.builder()
                 .name("Vegetable Salad")
-                .addMealProduct(getMealProduct(50, getProduct("cucumber", 0.7, 0, 3.6, 16).build()))
-                .addMealProduct(getMealProduct(70, getProduct("tomato", 0.9, 0.2, 3.9, 18).build()))
-                .addMealProduct(getMealProduct(100, getProduct("bell pepper", 0.9, 0.2, 4.6, 20).build()))
-                .addMealProduct(getMealProduct(10, getProduct("olive oil", 0, 100, 0, 884).build()));
+                .addMealProduct(getRecipeProduct(50, getProduct("cucumber", 0.7, 0, 3.6, 16).build()))
+                .addMealProduct(getRecipeProduct(70, getProduct("tomato", 0.9, 0.2, 3.9, 18).build()))
+                .addMealProduct(getRecipeProduct(100, getProduct("bell pepper", 0.9, 0.2, 4.6, 20).build()))
+                .addMealProduct(getRecipeProduct(10, getProduct("olive oil", 0, 100, 0, 884).build()));
     }
 
     private MealProduct getMealProduct(double volume, Product product) {
         return new MealProduct(product, volume);
+    }
+
+    private RecipeProduct getRecipeProduct(double volume, Product product) {
+        return new RecipeProduct(product, volume);
     }
 
 

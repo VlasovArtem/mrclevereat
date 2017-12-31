@@ -3,7 +3,7 @@ package org.avlasov.mrclevereat.entity.recipe;
 import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.image.Image;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
-import org.avlasov.mrclevereat.entity.product.MealProduct;
+import org.avlasov.mrclevereat.entity.product.RecipeProduct;
 import org.avlasov.mrclevereat.entity.recipe.enums.RecipeComplexity;
 import org.avlasov.mrclevereat.entity.recipe.enums.RecipeVisibility;
 import org.avlasov.mrclevereat.entity.social.Comment;
@@ -39,7 +39,7 @@ public class Recipe extends Base {
     private List<Image> images;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
-    private List<MealProduct> mealProducts;
+    private List<RecipeProduct> recipeProducts;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private List<Comment> comments;
@@ -47,7 +47,7 @@ public class Recipe extends Base {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    private Recipe(boolean isShared, int likes, double volume, String name, String description, NutritionalValue nutritionalValue, RecipeVisibility recipeVisibility, RecipeComplexity complexity, List<Image> images, List<MealProduct> mealProducts, List<Comment> comments) {
+    private Recipe(boolean isShared, int likes, double volume, String name, String description, NutritionalValue nutritionalValue, RecipeVisibility recipeVisibility, RecipeComplexity complexity, List<Image> images, List<RecipeProduct> recipeProducts, List<Comment> comments) {
         this.isShared = isShared;
         this.likes = likes;
         this.volume = volume;
@@ -57,7 +57,7 @@ public class Recipe extends Base {
         this.recipeVisibility = recipeVisibility;
         this.complexity = complexity;
         this.images = images;
-        this.mealProducts = mealProducts;
+        this.recipeProducts = recipeProducts;
         this.comments = comments;
     }
 
@@ -97,8 +97,8 @@ public class Recipe extends Base {
         return images;
     }
 
-    public List<MealProduct> getMealProducts() {
-        return mealProducts;
+    public List<RecipeProduct> getRecipeProducts() {
+        return recipeProducts;
     }
 
     public List<Comment> getComments() {
@@ -128,11 +128,11 @@ public class Recipe extends Base {
         private RecipeVisibility recipeVisibility;
         private RecipeComplexity complexity;
         private List<Image> images;
-        private List<MealProduct> mealProducts;
+        private List<RecipeProduct> recipeProducts;
         private List<Comment> comments;
 
         public RecipeBuilder() {
-            mealProducts = new ArrayList<>();
+            recipeProducts = new ArrayList<>();
         }
 
         public RecipeBuilder isShared(boolean isShared) {
@@ -180,15 +180,15 @@ public class Recipe extends Base {
             return this;
         }
 
-        public RecipeBuilder mealProducts(List<MealProduct> mealProducts) {
-            this.mealProducts = mealProducts;
+        public RecipeBuilder mealProducts(List<RecipeProduct> mealProducts) {
+            this.recipeProducts = mealProducts;
             return this;
         }
 
-        public RecipeBuilder addMealProduct(MealProduct mealProduct) {
-            if (Objects.isNull(mealProducts))
-                mealProducts = new ArrayList<>();
-            mealProducts.add(mealProduct);
+        public RecipeBuilder addMealProduct(RecipeProduct recipeProduct) {
+            if (Objects.isNull(recipeProducts))
+                recipeProducts = new ArrayList<>();
+            recipeProducts.add(recipeProduct);
             return this;
         }
 
@@ -198,7 +198,7 @@ public class Recipe extends Base {
         }
 
         public Recipe build() {
-            return new Recipe(isShared, likes, volume, name, description, nutritionalValue, recipeVisibility, complexity, images, mealProducts, comments);
+            return new Recipe(isShared, likes, volume, name, description, nutritionalValue, recipeVisibility, complexity, images, recipeProducts, comments);
         }
     }
 
@@ -216,12 +216,12 @@ public class Recipe extends Base {
                 recipeVisibility == recipe.recipeVisibility &&
                 complexity == recipe.complexity &&
                 Objects.equals(images, recipe.images) &&
-                Objects.equals(mealProducts, recipe.mealProducts) &&
+                Objects.equals(recipeProducts, recipe.recipeProducts) &&
                 Objects.equals(comments, recipe.comments);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isShared, likes, volume, name, description, nutritionalValue, recipeVisibility, complexity, images, mealProducts, comments);
+        return Objects.hash(isShared, likes, volume, name, description, nutritionalValue, recipeVisibility, complexity, images, recipeProducts, comments);
     }
 }

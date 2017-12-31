@@ -1,6 +1,7 @@
 package org.avlasov.mrclevereat.utils;
 
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
+import org.avlasov.mrclevereat.entity.product.DataProduct;
 import org.avlasov.mrclevereat.entity.product.MealProduct;
 import org.avlasov.mrclevereat.entity.ration.Meal;
 import org.avlasov.mrclevereat.entity.recipe.Recipe;
@@ -27,7 +28,7 @@ public class CalculateProductData {
     public void calculateMealNutritionalValue(Meal meal) {
         Objects.requireNonNull(meal);
         NutritionalValueData nutritionalValueData = new NutritionalValueData();
-        calculateMealProducts(meal.getMealProducts())
+        calculateDataProducts(meal.getMealProducts())
                 .ifPresent(nvd -> mergeNutritionalValueData().apply(nutritionalValueData, nvd));
         calculateRecipes(meal.getRecipes())
                 .ifPresent(nvd -> mergeNutritionalValueData().apply(nutritionalValueData, nvd));
@@ -42,7 +43,7 @@ public class CalculateProductData {
      */
     public void calculateRecipeNutritionalValue(Recipe recipe) {
         Objects.requireNonNull(recipe);
-        Optional<NutritionalValueData> nutritionalValueData = calculateMealProducts(recipe.getMealProducts());
+        Optional<NutritionalValueData> nutritionalValueData = calculateDataProducts(recipe.getRecipeProducts());
         if (nutritionalValueData.isPresent()) {
             recipe.setVolume(nutritionalValueData.get().nutritionalVolume);
             recipe.setNutritionalValue(nutritionalValueData.get().nutritionalValue);
@@ -52,16 +53,16 @@ public class CalculateProductData {
     }
 
     /**
-     * Calculate Meal Products {@link MealProduct}
+     * Calculate Meal Products {@link DataProduct}
      *
-     * @param mealProducts Meal Products
+     * @param dataProducts Meal Products
      * @return {@link Optional} of {@link NutritionalValueData} is recipes is not empty, other wise {@link Optional#empty()}
      */
-    private Optional<NutritionalValueData> calculateMealProducts(List<MealProduct> mealProducts) {
-        return Optional.ofNullable(mealProducts)
+    private <T extends DataProduct> Optional<NutritionalValueData> calculateDataProducts(List<T> dataProducts) {
+        return Optional.ofNullable(dataProducts)
                 .orElse(Collections.emptyList())
                 .parallelStream()
-                .map(calculateMealProduct())
+                .map(calculateDataProduct())
                 .reduce(mergeNutritionalValueData());
     }
 
@@ -85,7 +86,7 @@ public class CalculateProductData {
      *
      * @return function
      */
-    private Function<MealProduct, NutritionalValueData> calculateMealProduct() {
+    private Function<DataProduct, NutritionalValueData> calculateDataProduct() {
         return mp -> new NutritionalValueDataBuilder(mp.getVolume())
                 .buildOnBaseNutritionalValue(mp.getProduct().getNutritionalValue());
     }

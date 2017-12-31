@@ -9,8 +9,8 @@ create table user (
   birthday DATE,
   email VARCHAR(255) NOT NULL UNIQUE,
   first_name VARCHAR(255),
-  height SMALLINT,
   last_name VARCHAR(255),
+  height SMALLINT,
   password BINARY(255) NOT NULL,
   weight DOUBLE,
   activity_score TINYINT DEFAULT 1,
@@ -102,7 +102,18 @@ create table meal_product (
   modified_date DATE,
   volume DOUBLE NOT NULL,
   product_id BIGINT,
-  meal_id BIGINT,
+  meal_id BIGINT
+);
+
+create table recipe_product (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  created_by BIGINT NOT NULL,
+  created_date DATE,
+  is_deleted BOOLEAN not null,
+  modified_by BIGINT,
+  modified_date DATE,
+  volume DOUBLE NOT NULL,
+  product_id BIGINT,
   recipe_id BIGINT
 );
 
@@ -122,7 +133,7 @@ alter table comment add constraint FK9rxd7g6o4ghs8gsl1pry86ffc foreign key (reci
 alter table image add constraint FKhrygoy3c1iq66isgm2so0p14x foreign key (recipe_id) references recipe;
 alter table meal add constraint FK666vlyks49ly2dd6bjv356gcr foreign key (owner_id) references user;
 alter table meal_product add constraint FKmc6xw2hiwsswj76kd1ug4rrne foreign key (product_id) references product;
-alter table meal_product add constraint FKdrwyhir8fc0eq5hcvvptpbx70 foreign key (recipe_id) references recipe;
+alter table recipe_product add constraint FKdrwyhir8fc0eq5hcvvptpbx70 foreign key (recipe_id) references recipe;
 alter table meal_product add constraint FKrlos5xqxe0ghvmuu2hrlt0m31 foreign key (meal_id) references meal;
 alter table weight_log add constraint FKfwejuf54euxyvstmftnp5wd7j foreign key (owner_id) references user;
 
