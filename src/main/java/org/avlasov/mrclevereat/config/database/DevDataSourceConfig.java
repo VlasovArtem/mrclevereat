@@ -24,7 +24,7 @@ public class DevDataSourceConfig {
         return new EmbeddedDatabaseBuilder()
                 .setType(EmbeddedDatabaseType.H2)
                 .addScript("scripts/schema-h2.sql")
-                .addScripts("scripts/data.sql")
+//                .addScripts("scripts/data.sql")
                 .build();
     }
 

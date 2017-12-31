@@ -1,29 +1,25 @@
 package org.avlasov.mrclevereat.entity.diet;
 
-import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.logs.WeightLog;
-import org.avlasov.mrclevereat.entity.user.User;
 
-import javax.persistence.*;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
  **/
-@Entity
-public class DietData extends Base {
+public class DietData {
 
     //from 1 to 10. 10 - high activity 7 days a week, 1 - no activity.
     private byte activityScore;
     private double targetWeight;
     private int gramsPerWeek;
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "diet_data_id")
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "owner_id")
     private List<WeightLog> weightLogs;
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "owner_id", nullable = false)
-    private User owner;
 
     private DietData() {}
 
@@ -43,10 +39,6 @@ public class DietData extends Base {
         return weightLogs;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
     public static DietDataBuilder builder() {
         return new DietDataBuilder();
     }
@@ -56,7 +48,6 @@ public class DietData extends Base {
         private double targetWeight;
         private int gramsPerWeek;
         private List<WeightLog> weightLogs;
-        private User owner;
 
         public DietDataBuilder activityScore(byte activityScore) {
             this.activityScore = activityScore;
@@ -78,18 +69,12 @@ public class DietData extends Base {
             return this;
         }
 
-        public DietDataBuilder owner(User owner) {
-            this.owner = owner;
-            return this;
-        }
-
         public DietData build() {
             DietData dietData = new DietData();
             dietData.activityScore = activityScore;
             dietData.gramsPerWeek = gramsPerWeek;
             dietData.targetWeight = targetWeight;
             dietData.weightLogs = weightLogs;
-            dietData.owner = owner;
             return dietData;
         }
     }
@@ -102,12 +87,11 @@ public class DietData extends Base {
         return activityScore == dietData.activityScore &&
                 Double.compare(dietData.targetWeight, targetWeight) == 0 &&
                 gramsPerWeek == dietData.gramsPerWeek &&
-                Objects.equals(weightLogs, dietData.weightLogs) &&
-                Objects.equals(owner, dietData.owner);
+                Objects.equals(weightLogs, dietData.weightLogs);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(activityScore, targetWeight, gramsPerWeek, weightLogs, owner);
+        return Objects.hash(activityScore, targetWeight, gramsPerWeek, weightLogs);
     }
 }
