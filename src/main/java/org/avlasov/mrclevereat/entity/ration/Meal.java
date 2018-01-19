@@ -30,14 +30,22 @@ public class Meal extends Base {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    private Meal() {}
+    Meal() {}
+
+    Meal(List<MealProduct> mealProducts, List<Recipe> recipes, NutritionalValue nutritionalValue, double volume, User owner) {
+        this.mealProducts = mealProducts;
+        this.recipes = recipes;
+        this.nutritionalValue = nutritionalValue;
+        this.volume = volume;
+        this.owner = owner;
+    }
 
     public List<MealProduct> getMealProducts() {
-        return mealProducts;
+        return new ArrayList<>(mealProducts);
     }
 
     public List<Recipe> getRecipes() {
-        return recipes;
+        return new ArrayList<>(recipes);
     }
 
     public NutritionalValue getNutritionalValue() {
@@ -48,20 +56,12 @@ public class Meal extends Base {
         return volume;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-
-    public void setNutritionalValue(NutritionalValue nutritionalValue) {
-        this.nutritionalValue = nutritionalValue;
-    }
-
-    public void setVolume(double volume) {
-        this.volume = volume;
-    }
-
     public static MealBuilder builder() {
         return new MealBuilder();
+    }
+
+    public static MealBuilder builder(Meal meal) {
+        return new MealBuilder(meal);
     }
 
     public static class MealBuilder {
@@ -71,6 +71,17 @@ public class Meal extends Base {
         private NutritionalValue nutritionalValue;
         private double volume;
         private User owner;
+
+        MealBuilder() {
+        }
+
+        MealBuilder(Meal meal) {
+            mealProducts = meal.mealProducts;
+            recipes = meal.recipes;
+            nutritionalValue = meal.nutritionalValue;
+            volume = meal.volume;
+            owner = meal.owner;
+        }
 
         public MealBuilder mealProducts(List<MealProduct> mealProducts) {
             this.mealProducts = mealProducts;
@@ -112,13 +123,7 @@ public class Meal extends Base {
         }
 
         public Meal build() {
-            Meal meal = new Meal();
-            meal.mealProducts = mealProducts;
-            meal.recipes = recipes;
-            meal.nutritionalValue = nutritionalValue;
-            meal.volume = volume;
-            meal.owner = owner;
-            return meal;
+            return new Meal(mealProducts, recipes, nutritionalValue, volume, owner);
         }
     }
 

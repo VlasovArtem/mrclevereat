@@ -25,15 +25,17 @@ public class CalculateProductData {
      *
      * @param meal Meal
      */
-    public void calculateMealNutritionalValue(Meal meal) {
+    public Meal calculateMealNutritionalValue(Meal meal) {
         Objects.requireNonNull(meal);
         NutritionalValueData nutritionalValueData = new NutritionalValueData();
         calculateDataProducts(meal.getMealProducts())
                 .ifPresent(nvd -> mergeNutritionalValueData().apply(nutritionalValueData, nvd));
         calculateRecipes(meal.getRecipes())
                 .ifPresent(nvd -> mergeNutritionalValueData().apply(nutritionalValueData, nvd));
-        meal.setNutritionalValue(nutritionalValueData.nutritionalValue);
-        meal.setVolume(nutritionalValueData.nutritionalVolume);
+        return Meal.builder(meal)
+                .nutritionalValue(nutritionalValueData.nutritionalValue)
+                .volume(nutritionalValueData.nutritionalVolume)
+                .build();
     }
 
     /**
@@ -41,14 +43,17 @@ public class CalculateProductData {
      *
      * @param recipe the recipe
      */
-    public void calculateRecipeNutritionalValue(Recipe recipe) {
+    public Recipe calculateRecipeNutritionalValue(Recipe recipe) {
         Objects.requireNonNull(recipe);
         Optional<NutritionalValueData> nutritionalValueData = calculateDataProducts(recipe.getRecipeProducts());
+        Recipe.RecipeBuilder builder = Recipe.builder(recipe);
         if (nutritionalValueData.isPresent()) {
-            recipe.setVolume(nutritionalValueData.get().nutritionalVolume);
-            recipe.setNutritionalValue(nutritionalValueData.get().nutritionalValue);
+            return builder.volume(nutritionalValueData.get().nutritionalVolume)
+                    .nutritionalValue(nutritionalValueData.get().nutritionalValue)
+                    .build();
         } else {
-            recipe.setNutritionalValue(NutritionalValue.builder().build());
+            return builder.nutritionalValue(NutritionalValue.builder().build())
+                    .build();
         }
     }
 

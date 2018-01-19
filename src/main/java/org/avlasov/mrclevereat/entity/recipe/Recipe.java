@@ -47,7 +47,10 @@ public class Recipe extends Base {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    private Recipe(boolean isShared, int likes, double volume, String name, String description, NutritionalValue nutritionalValue, RecipeVisibility recipeVisibility, RecipeComplexity complexity, List<Image> images, List<RecipeProduct> recipeProducts, List<Comment> comments) {
+    Recipe() {
+    }
+
+    Recipe(boolean isShared, int likes, double volume, String name, String description, NutritionalValue nutritionalValue, RecipeVisibility recipeVisibility, RecipeComplexity complexity, List<Image> images, List<RecipeProduct> recipeProducts, List<Comment> comments) {
         this.isShared = isShared;
         this.likes = likes;
         this.volume = volume;
@@ -94,27 +97,23 @@ public class Recipe extends Base {
     }
 
     public List<Image> getImages() {
-        return images;
+        return new ArrayList<>(images);
     }
 
     public List<RecipeProduct> getRecipeProducts() {
-        return recipeProducts;
+        return new ArrayList<>(recipeProducts);
     }
 
     public List<Comment> getComments() {
-        return comments;
-    }
-
-    public void setVolume(double volume) {
-        this.volume = volume;
-    }
-
-    public void setNutritionalValue(NutritionalValue nutritionalValue) {
-        this.nutritionalValue = nutritionalValue;
+        return new ArrayList<>(comments);
     }
 
     public static RecipeBuilder builder() {
         return new RecipeBuilder();
+    }
+
+    public static RecipeBuilder builder(Recipe recipe) {
+        return new RecipeBuilder(recipe);
     }
 
     public static class RecipeBuilder {
@@ -131,7 +130,21 @@ public class Recipe extends Base {
         private List<RecipeProduct> recipeProducts;
         private List<Comment> comments;
 
-        public RecipeBuilder() {
+        RecipeBuilder(Recipe recipe) {
+            isShared = recipe.isShared;
+            likes = recipe.likes;
+            volume = recipe.volume;
+            name = recipe.name;
+            description = recipe.description;
+            nutritionalValue = recipe.nutritionalValue;
+            recipeVisibility = recipe.recipeVisibility;
+            complexity = recipe.complexity;
+            images = recipe.images;
+            recipeProducts = recipe.recipeProducts;
+            comments = recipe.comments;
+        }
+
+        RecipeBuilder() {
             recipeProducts = new ArrayList<>();
         }
 
