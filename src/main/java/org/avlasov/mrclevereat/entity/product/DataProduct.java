@@ -26,16 +26,8 @@ public abstract class DataProduct extends Base {
         return product;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
-
     public double getVolume() {
         return volume;
-    }
-
-    public void setVolume(double volume) {
-        this.volume = volume;
     }
 
     @Override
@@ -50,7 +42,6 @@ public abstract class DataProduct extends Base {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(super.hashCode(), product, volume);
     }
 }
