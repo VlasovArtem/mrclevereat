@@ -33,7 +33,7 @@ public class DevDataSourceConfig {
      * @return
      * @throws SQLException
      */
-    @Bean
+    @Bean(destroyMethod = "stop")
     public Server server() throws SQLException {
         return Server.createTcpServer("-tcp", "-tcpAllowOthers", "-tcpPort", "9092").start();
     }
