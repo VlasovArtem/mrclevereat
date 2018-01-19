@@ -6,6 +6,7 @@ import org.avlasov.mrclevereat.entity.diet.DietData;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Created By artemvlasov on 22/12/2017
@@ -33,7 +34,19 @@ public class User extends Base {
     @Embedded
     private DietData dietData;
 
-    public User(){}
+    User(){}
+
+    User(String email, byte[] password, String lastName, String firstName, LocalDate birthday, int age, double weight, short height, DietData dietData) {
+        this.email = email;
+        this.password = password;
+        this.lastName = lastName;
+        this.firstName = firstName;
+        this.birthday = birthday;
+        this.age = age;
+        this.weight = weight;
+        this.height = height;
+        this.dietData = dietData;
+    }
 
     public String getEmail() {
         return email;
@@ -71,12 +84,14 @@ public class User extends Base {
         return dietData;
     }
 
-    public void setDietData(DietData dietData) {
-        this.dietData = dietData;
-    }
-
     public static UserBuilder builder(String email, byte[] password) {
         return new UserBuilder(email, password);
+    }
+
+    public static UserBuilder builder(User user) {
+        Objects.requireNonNull(user.password);
+        Objects.requireNonNull(user.email);
+        return new UserBuilder(user);
     }
 
     public static class UserBuilder {
@@ -91,9 +106,21 @@ public class User extends Base {
         private short height;
         private DietData dietData;
 
-        public UserBuilder(String email, byte[] password) {
+        UserBuilder(String email, byte[] password) {
             this.email = email;
             this.password = password;
+        }
+
+        UserBuilder(User user) {
+            password = user.password;
+            email = user.email;
+            lastName = user.lastName;
+            firstName = user.firstName;
+            birthday = user.birthday;
+            age = user.age;
+            weight = user.weight;
+            height = user.height;
+            dietData = user.dietData;
         }
 
         public UserBuilder lastName(String lastName) {
@@ -132,20 +159,8 @@ public class User extends Base {
         }
 
         public User build() {
-            User user = new User();
-            user.dietData = dietData;
-            user.age = age;
-            user.email = email;
-            user.password = password;
-            user.lastName = lastName;
-            user.firstName = firstName;
-            user.birthday = birthday;
-            user.weight = weight;
-            user.height = height;
-            return user;
+            return new User(email, password, lastName, firstName, birthday, age, weight, height, dietData);
         }
-
-
     }
 
 }
