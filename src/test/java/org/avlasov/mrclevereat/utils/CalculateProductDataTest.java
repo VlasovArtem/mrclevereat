@@ -19,9 +19,9 @@ class CalculateProductDataTest {
     @Test
     void calculateMealTotals_WithRequiredData_CalculateNutritionalValue() {
         Meal meal = getMeal().build();
-        new CalculateProductData().calculateMealNutritionalValue(meal);
-        assertEquals(meal.getVolume(), 410);
-        assertEquals(meal.getNutritionalValue().getCalories(), 382);
+        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        assertEquals(newMeal.getVolume(), 410);
+        assertEquals(newMeal.getNutritionalValue().getCalories(), 382);
     }
 
     @Test
@@ -29,9 +29,9 @@ class CalculateProductDataTest {
         Meal meal = getMeal()
                 .recipes(null)
                 .build();
-        new CalculateProductData().calculateMealNutritionalValue(meal);
-        assertEquals(meal.getVolume(), 180);
-        assertEquals(meal.getNutritionalValue().getFat(), 4.73);
+        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        assertEquals(newMeal.getVolume(), 180);
+        assertEquals(newMeal.getNutritionalValue().getFat(), 4.73);
     }
 
     @Test
@@ -39,9 +39,9 @@ class CalculateProductDataTest {
         Meal meal = getMeal()
                 .mealProducts(null)
                 .build();
-        new CalculateProductData().calculateMealNutritionalValue(meal);
-        assertEquals(meal.getVolume(), 230);
-        assertEquals(meal.getNutritionalValue().getCarbohydrate(), 9.129999999999999);
+        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        assertEquals(newMeal.getVolume(), 230);
+        assertEquals(newMeal.getNutritionalValue().getCarbohydrate(), 9.129999999999999);
     }
 
     @Test
@@ -50,9 +50,9 @@ class CalculateProductDataTest {
                 .recipes(null)
                 .mealProducts(null)
                 .build();
-        new CalculateProductData().calculateMealNutritionalValue(meal);
-        assertEquals(meal.getVolume(), 0);
-        assertEquals(meal.getNutritionalValue().getCarbohydrate(), 0);
+        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        assertEquals(newMeal.getVolume(), 0);
+        assertEquals(newMeal.getNutritionalValue().getCarbohydrate(), 0);
     }
 
     @Test
@@ -63,10 +63,10 @@ class CalculateProductDataTest {
     @Test
     void calculateRecipesTotals_WithRequiredData_CalculateNutritionalValue() {
         Recipe recipe = getRecipe().build();
-        new CalculateProductData().calculateRecipeNutritionalValue(recipe);
-        assertEquals(recipe.getVolume(), 230);
-        assertEquals(recipe.getNutritionalValue().getProtein(), 1.88);
-        assertEquals(recipe.getName(), "Vegetable Salad");
+        Recipe newRecipe = new CalculateProductData().calculateRecipeNutritionalValue(recipe);
+        assertEquals(newRecipe.getVolume(), 230);
+        assertEquals(newRecipe.getNutritionalValue().getProtein(), 1.88);
+        assertEquals(newRecipe.getName(), "Vegetable Salad");
     }
 
     @Test
@@ -74,9 +74,9 @@ class CalculateProductDataTest {
         Recipe recipe = getRecipe()
                 .mealProducts(null)
                 .build();
-        new CalculateProductData().calculateRecipeNutritionalValue(recipe);
-        assertEquals(recipe.getVolume(), 0);
-        assertEquals(recipe.getNutritionalValue().getProtein(), 0);
+        Recipe newRecipe = new CalculateProductData().calculateRecipeNutritionalValue(recipe);
+        assertEquals(newRecipe.getVolume(), 0);
+        assertEquals(newRecipe.getNutritionalValue().getProtein(), 0);
     }
 
     @Test

@@ -7,9 +7,7 @@ import org.avlasov.mrclevereat.entity.recipe.Recipe;
 import org.avlasov.mrclevereat.entity.user.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created By artemvlasov on 22/12/2017
@@ -41,11 +39,11 @@ public class Meal extends Base {
     }
 
     public List<MealProduct> getMealProducts() {
-        return new ArrayList<>(mealProducts);
+        return new ArrayList<>(Optional.ofNullable(mealProducts).orElseGet(Collections::emptyList));
     }
 
     public List<Recipe> getRecipes() {
-        return new ArrayList<>(recipes);
+        return new ArrayList<>(Optional.ofNullable(recipes).orElseGet(Collections::emptyList));
     }
 
     public NutritionalValue getNutritionalValue() {
