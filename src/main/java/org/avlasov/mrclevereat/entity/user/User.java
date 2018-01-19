@@ -3,6 +3,7 @@ package org.avlasov.mrclevereat.entity.user;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.avlasov.mrclevereat.entity.Base;
 import org.avlasov.mrclevereat.entity.diet.DietData;
+import org.avlasov.mrclevereat.entity.user.enums.Gender;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -26,6 +27,7 @@ public class User extends Base {
     private String lastName;
     private String firstName;
     private LocalDate birthday;
+    private Gender gender;
     private int age;
     //Weight in kilograms
     private double weight;
@@ -36,12 +38,13 @@ public class User extends Base {
 
     User(){}
 
-    User(String email, byte[] password, String lastName, String firstName, LocalDate birthday, int age, double weight, short height, DietData dietData) {
+    User(String email, byte[] password, String lastName, String firstName, LocalDate birthday, Gender gender, int age, double weight, short height, DietData dietData) {
         this.email = email;
         this.password = password;
         this.lastName = lastName;
         this.firstName = firstName;
         this.birthday = birthday;
+        this.gender = gender;
         this.age = age;
         this.weight = weight;
         this.height = height;
@@ -66,6 +69,10 @@ public class User extends Base {
 
     public LocalDate getBirthday() {
         return birthday;
+    }
+
+    public Gender getGender() {
+        return gender;
     }
 
     public int getAge() {
@@ -101,6 +108,7 @@ public class User extends Base {
         private String lastName;
         private String firstName;
         private LocalDate birthday;
+        private Gender gender;
         private int age;
         private double weight;
         private short height;
@@ -138,6 +146,11 @@ public class User extends Base {
             return this;
         }
 
+        public UserBuilder gender(Gender gender) {
+            this.gender = gender;
+            return this;
+        }
+
         public UserBuilder age(int age) {
             this.age = age;
             return this;
@@ -159,7 +172,7 @@ public class User extends Base {
         }
 
         public User build() {
-            return new User(email, password, lastName, firstName, birthday, age, weight, height, dietData);
+            return new User(email, password, lastName, firstName, birthday, gender, age, weight, height, dietData);
         }
     }
 

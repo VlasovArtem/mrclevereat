@@ -1,6 +1,7 @@
 package org.avlasov.mrclevereat.entity.user;
 
 import org.avlasov.mrclevereat.entity.diet.DietData;
+import org.avlasov.mrclevereat.entity.user.enums.Gender;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -45,6 +46,11 @@ class UserTest {
     }
 
     @Test
+    void getGender() {
+        assertEquals(Gender.MALE, getUser().getGender());
+    }
+
+    @Test
     void getAge() {
         assertEquals(10, getUser().getAge());
     }
@@ -79,6 +85,7 @@ class UserTest {
                 .dietData(DietData.builder().build())
                 .weight(120)
                 .height((short) 174)
+                .gender(Gender.MALE)
                 .lastName("test")
                 .firstName("test")
                 .birthday(LocalDate.now())
