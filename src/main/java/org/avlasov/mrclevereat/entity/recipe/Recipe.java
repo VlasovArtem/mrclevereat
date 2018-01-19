@@ -10,9 +10,7 @@ import org.avlasov.mrclevereat.entity.social.Comment;
 import org.avlasov.mrclevereat.entity.user.User;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created By artemvlasov on 22/12/2017
@@ -97,15 +95,15 @@ public class Recipe extends Base {
     }
 
     public List<Image> getImages() {
-        return new ArrayList<>(images);
+        return new ArrayList<>(Optional.ofNullable(images).orElseGet(Collections::emptyList));
     }
 
     public List<RecipeProduct> getRecipeProducts() {
-        return new ArrayList<>(recipeProducts);
+        return new ArrayList<>(Optional.ofNullable(recipeProducts).orElseGet(Collections::emptyList));
     }
 
     public List<Comment> getComments() {
-        return new ArrayList<>(comments);
+        return new ArrayList<>(Optional.ofNullable(comments).orElseGet(Collections::emptyList));
     }
 
     public static RecipeBuilder builder() {

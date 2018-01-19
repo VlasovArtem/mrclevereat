@@ -81,7 +81,7 @@ public class CalculateProductData {
         return Optional.ofNullable(recipes)
                 .orElse(Collections.emptyList())
                 .parallelStream()
-                .peek(this::calculateRecipeNutritionalValue)
+                .map(this::calculateRecipeNutritionalValue)
                 .map(recipe -> new NutritionalValueData(recipe.getNutritionalValue(), recipe.getVolume()))
                 .reduce(mergeNutritionalValueData());
     }
