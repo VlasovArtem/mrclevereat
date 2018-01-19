@@ -13,7 +13,14 @@ public class NutritionalValue {
     private double carbohydrate;
     private double calories;
 
-    private NutritionalValue() {}
+    NutritionalValue() {}
+
+    NutritionalValue(double protein, double fat, double carbohydrate, double calories) {
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrate = carbohydrate;
+        this.calories = calories;
+    }
 
     public double getProtein() {
         return protein;
@@ -62,12 +69,7 @@ public class NutritionalValue {
         }
 
         public NutritionalValue build() {
-            NutritionalValue nutritionalValue = new NutritionalValue();
-            nutritionalValue.protein = protein;
-            nutritionalValue.fat = fat;
-            nutritionalValue.carbohydrate = carbohydrate;
-            nutritionalValue.calories = calories;
-            return nutritionalValue;
+            return new NutritionalValue(protein, fat, carbohydrate, calories);
         }
     }
 
