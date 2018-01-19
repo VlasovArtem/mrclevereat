@@ -16,7 +16,7 @@ import java.util.Objects;
  * Created By artemvlasov on 22/12/2017
  **/
 @MappedSuperclass
-public class Base {
+public abstract class Base {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
