@@ -5,6 +5,9 @@ import org.avlasov.mrclevereat.entity.logs.WeightLog;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +17,8 @@ import java.util.Objects;
 public class DietData {
 
     //from 1 to 10. 10 - high activity 7 days a week, 1 - no activity.
+    @Min(value = 1, message = "Minimal Activity Score is 1")
+    @Max(value = 10, message = "Maximum Activity Score is 10")
     private byte activityScore;
     private double targetWeight;
     private int gramsPerWeek;
@@ -21,7 +26,14 @@ public class DietData {
     @JoinColumn(name = "owner_id")
     private List<WeightLog> weightLogs;
 
-    private DietData() {}
+    DietData() {}
+
+    DietData(byte activityScore, double targetWeight, int gramsPerWeek, List<WeightLog> weightLogs) {
+        this.activityScore = activityScore;
+        this.targetWeight = targetWeight;
+        this.gramsPerWeek = gramsPerWeek;
+        this.weightLogs = weightLogs;
+    }
 
     public byte getActivityScore() {
         return activityScore;
@@ -36,7 +48,7 @@ public class DietData {
     }
 
     public List<WeightLog> getWeightLogs() {
-        return weightLogs;
+        return new ArrayList<>(weightLogs);
     }
 
     public static DietDataBuilder builder() {
@@ -70,12 +82,7 @@ public class DietData {
         }
 
         public DietData build() {
-            DietData dietData = new DietData();
-            dietData.activityScore = activityScore;
-            dietData.gramsPerWeek = gramsPerWeek;
-            dietData.targetWeight = targetWeight;
-            dietData.weightLogs = weightLogs;
-            return dietData;
+            return new DietData(activityScore, targetWeight, gramsPerWeek, weightLogs);
         }
     }
 
