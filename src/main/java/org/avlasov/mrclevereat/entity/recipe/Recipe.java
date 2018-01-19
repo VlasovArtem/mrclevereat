@@ -144,9 +144,7 @@ public class Recipe extends Base {
             comments = recipe.comments;
         }
 
-        RecipeBuilder() {
-            recipeProducts = new ArrayList<>();
-        }
+        RecipeBuilder() {}
 
         public RecipeBuilder isShared(boolean isShared) {
             this.isShared = isShared;
