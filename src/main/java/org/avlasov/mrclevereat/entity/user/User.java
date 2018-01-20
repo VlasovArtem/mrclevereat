@@ -6,6 +6,7 @@ import org.avlasov.mrclevereat.entity.diet.DietData;
 import org.avlasov.mrclevereat.entity.user.enums.Gender;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -20,8 +21,11 @@ import java.util.Objects;
 
 public class User extends Base {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
+    @NotNull
     private String email;
+    @Column(nullable = false)
+    @NotNull
     private byte[] password;
     private String lastName;
     private String firstName;
@@ -30,8 +34,12 @@ public class User extends Base {
     private Gender gender;
     private int age;
     //Weight in kilograms
+    @Column(nullable = false)
+    @NotNull
     private double weight;
     //Height in centimeters
+    @Column(nullable = false)
+    @NotNull
     private short height;
     @Embedded
     private DietData dietData;
