@@ -19,7 +19,7 @@ public class AppConfig {
     @Bean
     public MessageSource messageSource() {
         ResourceBundleMessageSource bundleMessageSource = new ResourceBundleMessageSource();
-        bundleMessageSource.setBasenames("validation/errormsg/diet_data");
+        bundleMessageSource.setBasenames("validation/errormsg/diet_data", "validation/errormsg/user");
         bundleMessageSource.setDefaultEncoding("UTF-8");
         return bundleMessageSource;
     }
