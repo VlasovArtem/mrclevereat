@@ -32,6 +32,8 @@ ext.springboot = '1.5.9.RELEASE'
 ext.springdata = '2.0.2.RELEASE'
 ext.h2 = '1.4.196'
 ext.hibernate = '5.2.10.Final'
+ext.mockito = '2.13.0'
+ext.powermock = '2.0.0-beta.5'
 
 dependencyManagement {
     imports {
@@ -77,8 +79,9 @@ dependencies {
     testCompile group: 'org.hamcrest', name: 'hamcrest-all', version: hamcrest
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: junit
     testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: junit
-    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.13.0'
-    testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: '1.7.3'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: mockito
+    testCompile group: 'org.powermock', name: 'powermock-api-mockito2', version: powermock
+    testCompile group: 'org.powermock', name: 'powermock-module-junit4', version: powermock
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompileOnly group : 'org.apiguardian', name : 'apiguardian-api', version : '1.0.0'
 
