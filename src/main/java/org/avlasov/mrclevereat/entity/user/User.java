@@ -22,11 +22,11 @@ public class User extends Base {
 
     @Column(unique = true)
     private String email;
-    @JsonIgnore
     private byte[] password;
     private String lastName;
     private String firstName;
     private LocalDate birthday;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
     private int age;
     //Weight in kilograms
@@ -55,6 +55,7 @@ public class User extends Base {
         return email;
     }
 
+    @JsonIgnore
     public byte[] getPassword() {
         return password;
     }

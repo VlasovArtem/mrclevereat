@@ -7,6 +7,7 @@ create table user (
   modified_date DATE,
   age INTEGER DEFAULT 0,
   birthday DATE,
+  gender VARCHAR(20) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
