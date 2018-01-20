@@ -6,7 +6,6 @@ import org.avlasov.mrclevereat.utils.TargetWeightCalculator;
 import org.avlasov.mrclevereat.validation.enums.DietDataErrorCode;
 import org.springframework.stereotype.Component;
 
-import java.util.Locale;
 import java.util.Objects;
 
 
@@ -26,13 +25,13 @@ public class DietDataValidator {
         Objects.requireNonNull(user);
         DietData dietData = user.getDietData();
         if (!(dietData.getActivityScore() > 0 && dietData.getActivityScore() <= 10)) {
-            return new ValidationResult(true, DietDataErrorCode.ACTIVITY_SCORE.getCode(), null, Locale.ENGLISH);
+            return new ValidationResult(true, DietDataErrorCode.ACTIVITY_SCORE.getCode(), null);
         } else if (!(dietData.getGramsPerWeek() >= 100 && dietData.getGramsPerWeek() <= 2000)) {
-            return new ValidationResult(true, DietDataErrorCode.GRAMS_PER_WEEK.getCode(), null, Locale.ENGLISH);
+            return new ValidationResult(true, DietDataErrorCode.GRAMS_PER_WEEK.getCode(), null);
         } else {
             double targetWeightData = targetWeight.calculateTargetWeightByBrokkFormula(user);
             if (user.getDietData().getTargetWeight() < targetWeightData - 10) {
-                return new ValidationResult(true, DietDataErrorCode.TARGET_WEIGHT.getCode(), new Object[]{targetWeightData}, Locale.ENGLISH);
+                return new ValidationResult(true, DietDataErrorCode.TARGET_WEIGHT.getCode(), new Object[]{targetWeightData});
             }
         }
         return ValidationResult.NO_ERRORS;
