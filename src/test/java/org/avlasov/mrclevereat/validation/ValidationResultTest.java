@@ -44,6 +44,6 @@ class ValidationResultTest {
         ValidationResult test = ValidationResult.createErrorValidationResult("test", new Object[]{"hello"});
         assertTrue(test.hasError());
         assertEquals("test", test.getErrorCode());
-        assertArrayEquals(new Object[]{"test"}, test.getArgs());
+        assertArrayEquals(new Object[]{"hello"}, test.getArgs());
     }
 }
