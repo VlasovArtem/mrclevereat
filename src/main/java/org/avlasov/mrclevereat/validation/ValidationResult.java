@@ -1,7 +1,5 @@
 package org.avlasov.mrclevereat.validation;
 
-import java.util.Locale;
-
 /**
  * Created By artemvlasov on 20/01/2018
  * For Error code please reference to resources/validation/errormsg
@@ -12,15 +10,13 @@ public class ValidationResult {
     private boolean hasError;
     private String errorCode;
     private Object[] arg;
-    private Locale locale;
 
     ValidationResult() {}
 
-    ValidationResult(boolean hasError, String errorCode, Object[] arg, Locale locale) {
+    ValidationResult(boolean hasError, String errorCode, Object[] arg) {
         this.hasError = hasError;
         this.errorCode = errorCode;
         this.arg = arg;
-        this.locale = locale;
     }
 
     public boolean hasError() {
@@ -35,7 +31,4 @@ public class ValidationResult {
         return arg;
     }
 
-    public Locale getLocale() {
-        return locale;
-    }
 }

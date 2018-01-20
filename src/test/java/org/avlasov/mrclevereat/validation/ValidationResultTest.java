@@ -3,11 +3,7 @@ package org.avlasov.mrclevereat.validation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.Locale;
-
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Created By artemvlasov on 20/01/2018
@@ -18,7 +14,7 @@ class ValidationResultTest {
 
     @BeforeEach
     void setUp() {
-        validationResult = new ValidationResult(false, "test", new Object[]{"test"}, Locale.ENGLISH);
+        validationResult = new ValidationResult(false, "test", new Object[]{"test"});
     }
 
     @Test
@@ -36,8 +32,4 @@ class ValidationResultTest {
         assertArrayEquals(new Object[]{"test"}, validationResult.getArg());
     }
 
-    @Test
-    void getLocale() {
-        assertEquals(Locale.ENGLISH, validationResult.getLocale());
-    }
 }
