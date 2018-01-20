@@ -9,14 +9,22 @@ public class ValidationResult {
     public static final ValidationResult NO_ERRORS = new ValidationResult();
     private boolean hasError;
     private String errorCode;
-    private Object[] arg;
+    private Object[] args;
 
     ValidationResult() {}
 
-    ValidationResult(boolean hasError, String errorCode, Object[] arg) {
+    ValidationResult(boolean hasError, String errorCode, Object[] args) {
         this.hasError = hasError;
         this.errorCode = errorCode;
-        this.arg = arg;
+        this.args = args;
+    }
+
+    public static ValidationResult createErrorValidationResult(String errorCode) {
+        return new ValidationResult(true, errorCode, null);
+    }
+
+    public static ValidationResult createErrorValidationResult(String errorCode, Object[] args) {
+        return new ValidationResult(true, errorCode, args);
     }
 
     public boolean hasError() {
@@ -27,8 +35,8 @@ public class ValidationResult {
         return errorCode;
     }
 
-    public Object[] getArg() {
-        return arg;
+    public Object[] getArgs() {
+        return args;
     }
 
 }

@@ -29,7 +29,21 @@ class ValidationResultTest {
 
     @Test
     void getArg() {
-        assertArrayEquals(new Object[]{"test"}, validationResult.getArg());
+        assertArrayEquals(new Object[]{"test"}, validationResult.getArgs());
     }
 
+    @Test
+    void createErrorValidationResult() {
+        ValidationResult test = ValidationResult.createErrorValidationResult("test");
+        assertTrue(test.hasError());
+        assertEquals("test", test.getErrorCode());
+    }
+
+    @Test
+    void createErrorValidationResult_WithArgs() {
+        ValidationResult test = ValidationResult.createErrorValidationResult("test", new Object[]{"hello"});
+        assertTrue(test.hasError());
+        assertEquals("test", test.getErrorCode());
+        assertArrayEquals(new Object[]{"test"}, test.getArgs());
+    }
 }
