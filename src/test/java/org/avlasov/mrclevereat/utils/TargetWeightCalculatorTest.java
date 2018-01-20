@@ -10,9 +10,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 /**
  * Created By artemvlasov on 20/01/2018
  **/
-class CalculateTargetWeightTest {
+class TargetWeightCalculatorTest {
 
-    private CalculateTargetWeight calculateTargetWeight = new CalculateTargetWeight();
+    private TargetWeightCalculator targetWeightCalculator = new TargetWeightCalculator();
 
     @Test
     void calculateTargetWeightByBrokkFormula_WithMaleUser_ReturnDouble() {
@@ -20,7 +20,7 @@ class CalculateTargetWeightTest {
                 .gender(Gender.MALE)
                 .height((short) 170)
                 .build();
-        assertEquals(80.5, calculateTargetWeight.calculateTargetWeightByBrokkFormula(user));
+        assertEquals(80.5, targetWeightCalculator.calculateTargetWeightByBrokkFormula(user));
     }
 
     @Test
@@ -29,12 +29,12 @@ class CalculateTargetWeightTest {
                 .gender(Gender.FEMALE)
                 .height((short) 170)
                 .build();
-        assertEquals(69, calculateTargetWeight.calculateTargetWeightByBrokkFormula(user));
+        assertEquals(69, targetWeightCalculator.calculateTargetWeightByBrokkFormula(user));
     }
 
     @Test
     void calculateTargetWeightByBrokkFormula_WithNullUser_ThrownException() {
-        assertThrows(NullPointerException.class, () -> calculateTargetWeight.calculateTargetWeightByBrokkFormula(null));
+        assertThrows(NullPointerException.class, () -> targetWeightCalculator.calculateTargetWeightByBrokkFormula(null));
     }
 
     private User.UserBuilder getUserBuilder() {

@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 /**
  * Created By artemvlasov on 23/12/2017
  **/
-class CalculateProductDataTest {
+class ProductDataCalculatorTest {
 
     @Test
     void calculateMealTotals_WithRequiredData_CalculateNutritionalValue() {
         Meal meal = getMeal().build();
-        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        Meal newMeal = new ProductDataCalculator().calculateMealNutritionalValue(meal);
         assertEquals(newMeal.getVolume(), 410);
         assertEquals(newMeal.getNutritionalValue().getCalories(), 382);
     }
@@ -29,7 +29,7 @@ class CalculateProductDataTest {
         Meal meal = getMeal()
                 .recipes(null)
                 .build();
-        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        Meal newMeal = new ProductDataCalculator().calculateMealNutritionalValue(meal);
         assertEquals(newMeal.getVolume(), 180);
         assertEquals(newMeal.getNutritionalValue().getFat(), 4.73);
     }
@@ -39,7 +39,7 @@ class CalculateProductDataTest {
         Meal meal = getMeal()
                 .mealProducts(null)
                 .build();
-        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        Meal newMeal = new ProductDataCalculator().calculateMealNutritionalValue(meal);
         assertEquals(newMeal.getVolume(), 230);
         assertEquals(newMeal.getNutritionalValue().getCarbohydrate(), 9.129999999999999);
     }
@@ -50,20 +50,20 @@ class CalculateProductDataTest {
                 .recipes(null)
                 .mealProducts(null)
                 .build();
-        Meal newMeal = new CalculateProductData().calculateMealNutritionalValue(meal);
+        Meal newMeal = new ProductDataCalculator().calculateMealNutritionalValue(meal);
         assertEquals(newMeal.getVolume(), 0);
         assertEquals(newMeal.getNutritionalValue().getCarbohydrate(), 0);
     }
 
     @Test
     void calculateMealTotals_WithNull_ThrownException() {
-        Assertions.assertThrows(NullPointerException.class, () -> new CalculateProductData().calculateMealNutritionalValue(null));
+        Assertions.assertThrows(NullPointerException.class, () -> new ProductDataCalculator().calculateMealNutritionalValue(null));
     }
 
     @Test
     void calculateRecipesTotals_WithRequiredData_CalculateNutritionalValue() {
         Recipe recipe = getRecipe().build();
-        Recipe newRecipe = new CalculateProductData().calculateRecipeNutritionalValue(recipe);
+        Recipe newRecipe = new ProductDataCalculator().calculateRecipeNutritionalValue(recipe);
         assertEquals(newRecipe.getVolume(), 230);
         assertEquals(newRecipe.getNutritionalValue().getProtein(), 1.88);
         assertEquals(newRecipe.getName(), "Vegetable Salad");
@@ -74,14 +74,14 @@ class CalculateProductDataTest {
         Recipe recipe = getRecipe()
                 .mealProducts(null)
                 .build();
-        Recipe newRecipe = new CalculateProductData().calculateRecipeNutritionalValue(recipe);
+        Recipe newRecipe = new ProductDataCalculator().calculateRecipeNutritionalValue(recipe);
         assertEquals(newRecipe.getVolume(), 0);
         assertEquals(newRecipe.getNutritionalValue().getProtein(), 0);
     }
 
     @Test
     void calculateRecipesTotals_WithNull_ThrownException() {
-        Assertions.assertThrows(NullPointerException.class, () -> new CalculateProductData().calculateRecipeNutritionalValue(null));
+        Assertions.assertThrows(NullPointerException.class, () -> new ProductDataCalculator().calculateRecipeNutritionalValue(null));
     }
 
     private Meal.MealBuilder getMeal() {

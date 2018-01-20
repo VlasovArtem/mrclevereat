@@ -10,7 +10,7 @@ import java.util.Objects;
  * Created By artemvlasov on 20/01/2018
  **/
 @Component
-public class CalculateTargetWeight {
+public class TargetWeightCalculator {
 
     /**
      * Calculate Target Weight by Brokk Formula

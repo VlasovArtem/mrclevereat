@@ -18,7 +18,7 @@ import java.util.function.Function;
  * Created By artemvlasov on 23/12/2017
  */
 @Component
-public class CalculateProductData {
+public class ProductDataCalculator {
 
     /**
      * Calculate All required data from Meal, like {@link Meal#getRecipes()} and {@link Meal#getMealProducts()}
@@ -97,7 +97,7 @@ public class CalculateProductData {
     }
 
     /**
-     * Merge Nutritional Value Data into on data. Merge {@link NutritionalValue} with help of {@link CalculateProductData#mergeNutritionalValues(NutritionalValue, NutritionalValue)}
+     * Merge Nutritional Value Data into on data. Merge {@link NutritionalValue} with help of {@link ProductDataCalculator#mergeNutritionalValues(NutritionalValue, NutritionalValue)}
      * and add volume of both {@link NutritionalValueData}
      *
      * @return BinaryOperator
