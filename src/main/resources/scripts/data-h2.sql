@@ -1,5 +1,6 @@
 INSERT INTO user VALUES (1, 0, '2017-10-31', false, 0, null, 30, '1987-10-10', 'MALE', 'test@mail.com', 'test_first', 'test_last', 180, '70617373776f7264', 120, 2, 1000, 80);
-INSERT INTO recipe VALUES (1, 1, '2017-10-31', false, 0, null, 2, 'test description', false, 10, 'test recipe 1', 300, 100, 10, 120, 'FOR_EVER', 300, 1);
+INSERT INTO recipe VALUES (1, 1, '2017-10-31', false, 0, null, 'test description', 'test recipe 1', 300, 100, 10, 120, 'FOR_EVER', 300, 1);
+INSERT INTO shared_recipe VALUES (1, 1, '2017-10-31', false, 0, null, 2, 10);
 INSERT INTO comment VALUES
   (1, 1, '2017-10-31', false, 0, null, 'test comment', 1, 1),
   (2, 1, '2017-12-31', false, 0, null, 'test comment 1', 1, 1);

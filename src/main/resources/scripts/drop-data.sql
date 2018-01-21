@@ -5,5 +5,6 @@ DELETE FROM meal_product;
 DELETE FROM recipe_product;
 DELETE FROM product;
 DELETE FROM recipe;
+DELETE FROM shared_recipe;
 DELETE FROM user;
 DELETE FROM weight_log;

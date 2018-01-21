@@ -1,12 +1,9 @@
 package org.avlasov.mrclevereat.entity.recipe;
 
 import org.avlasov.mrclevereat.entity.Base;
-import org.avlasov.mrclevereat.entity.image.Image;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 import org.avlasov.mrclevereat.entity.product.RecipeProduct;
-import org.avlasov.mrclevereat.entity.recipe.enums.RecipeComplexity;
 import org.avlasov.mrclevereat.entity.recipe.enums.RecipeVisibility;
-import org.avlasov.mrclevereat.entity.social.Comment;
 import org.avlasov.mrclevereat.entity.user.User;
 
 import javax.persistence.*;
@@ -21,8 +18,6 @@ import java.util.*;
 })
 public class Recipe extends Base {
 
-    private boolean isShared;
-    private int likes;
     private double volume;
     @Column(unique = true)
     private String name;
@@ -31,16 +26,9 @@ public class Recipe extends Base {
     private NutritionalValue nutritionalValue;
     @Enumerated(EnumType.STRING)
     private RecipeVisibility recipeVisibility;
-    private RecipeComplexity complexity;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id")
-    private List<Image> images;
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id")
     private List<RecipeProduct> recipeProducts;
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "recipe_id")
-    private List<Comment> comments;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "owner_id")
     private User owner;
@@ -48,26 +36,13 @@ public class Recipe extends Base {
     Recipe() {
     }
 
-    Recipe(boolean isShared, int likes, double volume, String name, String description, NutritionalValue nutritionalValue, RecipeVisibility recipeVisibility, RecipeComplexity complexity, List<Image> images, List<RecipeProduct> recipeProducts, List<Comment> comments) {
-        this.isShared = isShared;
-        this.likes = likes;
+    Recipe(double volume, String name, String description, NutritionalValue nutritionalValue, RecipeVisibility recipeVisibility, List<RecipeProduct> recipeProducts) {
         this.volume = volume;
         this.name = name;
         this.description = description;
         this.nutritionalValue = nutritionalValue;
         this.recipeVisibility = recipeVisibility;
-        this.complexity = complexity;
-        this.images = images;
         this.recipeProducts = recipeProducts;
-        this.comments = comments;
-    }
-
-    public boolean isShared() {
-        return isShared;
-    }
-
-    public int getLikes() {
-        return likes;
     }
 
     public double getVolume() {
@@ -90,20 +65,8 @@ public class Recipe extends Base {
         return recipeVisibility;
     }
 
-    public RecipeComplexity getComplexity() {
-        return complexity;
-    }
-
-    public List<Image> getImages() {
-        return new ArrayList<>(Optional.ofNullable(images).orElseGet(Collections::emptyList));
-    }
-
     public List<RecipeProduct> getRecipeProducts() {
         return new ArrayList<>(Optional.ofNullable(recipeProducts).orElseGet(Collections::emptyList));
-    }
-
-    public List<Comment> getComments() {
-        return new ArrayList<>(Optional.ofNullable(comments).orElseGet(Collections::emptyList));
     }
 
     public static RecipeBuilder builder() {
@@ -116,43 +79,23 @@ public class Recipe extends Base {
 
     public static class RecipeBuilder {
 
-        private boolean isShared;
-        private int likes;
         private double volume;
         private String name;
         private String description;
         private NutritionalValue nutritionalValue;
         private RecipeVisibility recipeVisibility;
-        private RecipeComplexity complexity;
-        private List<Image> images;
         private List<RecipeProduct> recipeProducts;
-        private List<Comment> comments;
 
         RecipeBuilder(Recipe recipe) {
-            isShared = recipe.isShared;
-            likes = recipe.likes;
             volume = recipe.volume;
             name = recipe.name;
             description = recipe.description;
             nutritionalValue = recipe.nutritionalValue;
             recipeVisibility = recipe.recipeVisibility;
-            complexity = recipe.complexity;
-            images = recipe.images;
             recipeProducts = recipe.recipeProducts;
-            comments = recipe.comments;
         }
 
         RecipeBuilder() {}
-
-        public RecipeBuilder isShared(boolean isShared) {
-            this.isShared = isShared;
-            return this;
-        }
-
-        public RecipeBuilder likes(int likes) {
-            this.likes = likes;
-            return this;
-        }
 
         public RecipeBuilder volume(double volume) {
             this.volume = volume;
@@ -179,16 +122,6 @@ public class Recipe extends Base {
             return this;
         }
 
-        public RecipeBuilder complexity(RecipeComplexity complexity) {
-            this.complexity = complexity;
-            return this;
-        }
-
-        public RecipeBuilder images(List<Image> images) {
-            this.images = images;
-            return this;
-        }
-
         public RecipeBuilder mealProducts(List<RecipeProduct> mealProducts) {
             this.recipeProducts = mealProducts;
             return this;
@@ -201,13 +134,8 @@ public class Recipe extends Base {
             return this;
         }
 
-        public RecipeBuilder comments(List<Comment> comments) {
-            this.comments = comments;
-            return this;
-        }
-
         public Recipe build() {
-            return new Recipe(isShared, likes, volume, name, description, nutritionalValue, recipeVisibility, complexity, images, recipeProducts, comments);
+            return new Recipe(volume, name, description, nutritionalValue, recipeVisibility, recipeProducts);
         }
     }
 
@@ -216,21 +144,16 @@ public class Recipe extends Base {
         if (this == o) return true;
         if (!(o instanceof Recipe)) return false;
         Recipe recipe = (Recipe) o;
-        return isShared == recipe.isShared &&
-                likes == recipe.likes &&
-                Double.compare(recipe.volume, volume) == 0 &&
+        return Double.compare(recipe.volume, volume) == 0 &&
                 Objects.equals(name, recipe.name) &&
                 Objects.equals(description, recipe.description) &&
                 Objects.equals(nutritionalValue, recipe.nutritionalValue) &&
                 recipeVisibility == recipe.recipeVisibility &&
-                complexity == recipe.complexity &&
-                Objects.equals(images, recipe.images) &&
-                Objects.equals(recipeProducts, recipe.recipeProducts) &&
-                Objects.equals(comments, recipe.comments);
+                Objects.equals(recipeProducts, recipe.recipeProducts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(isShared, likes, volume, name, description, nutritionalValue, recipeVisibility, complexity, images, recipeProducts, comments);
+        return Objects.hash(volume, name, description, nutritionalValue, recipeVisibility, recipeProducts);
     }
 }
