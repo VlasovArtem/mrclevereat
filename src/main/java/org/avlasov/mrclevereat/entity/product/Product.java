@@ -55,7 +55,7 @@ public class Product extends Base {
         private NutritionalValue nutritionalValue;
         private String usdaNumber;
 
-        public ProductBuilder(String name) {
+        ProductBuilder(String name) {
             this.name = name;
         }
 
