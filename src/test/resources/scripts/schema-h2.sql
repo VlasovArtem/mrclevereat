@@ -7,7 +7,7 @@ create table user (
   modified_date DATE,
   age INTEGER DEFAULT 0,
   birthday DATE,
-  GENDER VARCHAR(20),
+  gender VARCHAR(20) NOT NULL,
   email VARCHAR(255) NOT NULL UNIQUE,
   first_name VARCHAR(255),
   last_name VARCHAR(255),
@@ -26,10 +26,7 @@ create table recipe (
   is_deleted BOOLEAN not null,
   modified_by BIGINT,
   modified_date DATE,
-  complexity INTEGER,
   description VARCHAR(255),
-  is_shared BOOLEAN DEFAULT FALSE,
-  likes INTEGER DEFAULT 0,
   name VARCHAR(255),
   calories DOUBLE NOT NULL,
   carbohydrate DOUBLE NOT NULL,
@@ -38,6 +35,18 @@ create table recipe (
   recipe_visibility VARCHAR(255),
   volume DOUBLE NOT NULL,
   owner_id BIGINT
+);
+
+create table shared_recipe (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+  created_by BIGINT NOT NULL,
+  created_date DATE,
+  is_deleted BOOLEAN not null,
+  modified_by BIGINT,
+  modified_date DATE,
+  complexity INTEGER,
+  likes INTEGER DEFAULT 0,
+  recipe_id BIGINT
 );
 
 CREATE TABLE comment (
@@ -49,7 +58,7 @@ CREATE TABLE comment (
   modified_date DATE,
   comment VARCHAR(255),
   owner_id BIGINT NOT NULL,
-  recipe_id BIGINT NOT NULL
+  shared_recipe_id BIGINT NOT NULL
 );
 
 create table image (
@@ -60,7 +69,7 @@ create table image (
   modified_by BIGINT,
   modified_date DATE,
   image BINARY(255),
-  recipe_id BIGINT
+  shared_recipe_id BIGINT
 );
 
 create table meal (
@@ -130,13 +139,14 @@ create table weight_log (
 );
 
 alter table comment add constraint FKa2ug5h92rjf7fx792l15h2tr1 foreign key (owner_id) references user;
-alter table comment add constraint FK9rxd7g6o4ghs8gsl1pry86ffc foreign key (recipe_id) references recipe;
-alter table image add constraint FKhrygoy3c1iq66isgm2so0p14x foreign key (recipe_id) references recipe;
+alter table comment add constraint FK9rxd7g6o4ghs8gsl1pry86ffc foreign key (shared_recipe_id) references shared_recipe;
+alter table image add constraint FKhrygoy3c1iq66isgm2so0p14x foreign key (shared_recipe_id) references shared_recipe;
 alter table meal add constraint FK666vlyks49ly2dd6bjv356gcr foreign key (owner_id) references user;
 alter table meal_product add constraint FKmc6xw2hiwsswj76kd1ug4rrne foreign key (product_id) references product;
 alter table recipe_product add constraint FKdrwyhir8fc0eq5hcvvptpbx70 foreign key (recipe_id) references recipe;
 alter table meal_product add constraint FKrlos5xqxe0ghvmuu2hrlt0m31 foreign key (meal_id) references meal;
 alter table weight_log add constraint FKfwejuf54euxyvstmftnp5wd7j foreign key (owner_id) references user;
+alter table shared_recipe add constraint FK4fdfgr4t4kgjggfl44klk foreign key (recipe_id) references recipe;
 
 create index NAME_IDX on product (name);
 create index USDANUM_IDX on product (usda_number);
