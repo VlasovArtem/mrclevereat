@@ -1,13 +1,9 @@
 package org.avlasov.mrclevereat.entity.recipe;
 
-import org.avlasov.mrclevereat.entity.image.Image;
 import org.avlasov.mrclevereat.entity.nutrition.NutritionalValue;
 import org.avlasov.mrclevereat.entity.product.Product;
 import org.avlasov.mrclevereat.entity.product.RecipeProduct;
-import org.avlasov.mrclevereat.entity.recipe.enums.RecipeComplexity;
 import org.avlasov.mrclevereat.entity.recipe.enums.RecipeVisibility;
-import org.avlasov.mrclevereat.entity.social.Comment;
-import org.avlasov.mrclevereat.entity.user.User;
 import org.hamcrest.collection.IsCollectionWithSize;
 import org.junit.jupiter.api.Test;
 
@@ -24,16 +20,6 @@ class RecipeTest {
     @Test
     void defaultConstructor() {
         new Recipe();
-    }
-
-    @Test
-    void isShared() {
-        assertTrue(getRecipe().isShared());
-    }
-
-    @Test
-    void getLikes() {
-        assertEquals(10, getRecipe().getLikes());
     }
 
     @Test
@@ -62,23 +48,8 @@ class RecipeTest {
     }
 
     @Test
-    void getComplexity() {
-        assertEquals(RecipeComplexity.HIGH, getRecipe().getComplexity());
-    }
-
-    @Test
-    void getImages() {
-        assertThat(getRecipe().getImages(), IsCollectionWithSize.hasSize(1));
-    }
-
-    @Test
     void getRecipeProducts() {
         assertThat(getRecipe().getRecipeProducts(), IsCollectionWithSize.hasSize(1));
-    }
-
-    @Test
-    void getComments() {
-        assertThat(getRecipe().getComments(), IsCollectionWithSize.hasSize(1));
     }
 
     @Test
@@ -106,13 +77,8 @@ class RecipeTest {
     private Recipe getRecipe() {
         return Recipe.builder()
                 .recipeVisibility(RecipeVisibility.DAY)
-                .complexity(RecipeComplexity.HIGH)
                 .addMealProduct(new RecipeProduct(Product.builder("Test").build(), 10))
-                .comments(Collections.singletonList(new Comment("test", User.builder("test", "test".getBytes()).build())))
                 .description("test")
-                .images(Collections.singletonList(new Image()))
-                .isShared(true)
-                .likes(10)
                 .name("test")
                 .nutritionalValue(NutritionalValue.builder().build())
                 .volume(100)
